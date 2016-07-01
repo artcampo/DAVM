@@ -16,10 +16,10 @@ bool VirtualMachine::ExecProcess(){
       uint32_t current_op_code = process_->GetCurrentOpCode();
       using namespace IRCodification;
       
-      if(current_op_code == IR_STOP){
+      if (current_op_code == IR_STOP){
         executing = false;
       }else{
-        
+        //if (current_op_code == IR_LOAD)
 
         
         process_->NextOpCode();

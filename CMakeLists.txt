@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 2.8.9)
 
-SET(CMAKE_INSTALL_PREFIX ${CMAKE_CURRENT_SOURCE_DIR}/install)
+#SET(CMAKE_INSTALL_PREFIX ${CMAKE_CURRENT_SOURCE_DIR}/../install)
 project(DAVM)
 
 include_directories(include)
