@@ -13,16 +13,30 @@ bool VirtualMachine::ExecProcess(){
       error     = true;
       executing = false;
     }else{
-      uint32_t current_op_code = process_->GetCurrentOpCode();
       using namespace IRCodification;
+      
+      uint32_t current_instruction  = process_->GetCurrentOpCode();
+      uint32_t current_op_code      = DecodeOpCode(current_instruction);
+      uint32_t op_offset            = DecodeOffset(current_op_code);
       
       if (current_op_code == IR_STOP){
         executing = false;
       }else{
-        //if (current_op_code == IR_LOAD)
+        bool instructionHasJump = false;
+        switch(current_op_code){
+          case IR_LOAD: InstructionLoad(current_instruction);  break;
+          case IR_ADD:  InstructionAdd(current_instruction);   break;
+          default:      error = true;                          break;
+        }
+        if (current_op_code == IR_LOAD){
+          
+        }else 
+          
 
-        
-        process_->NextOpCode();
+        if (not instructionHasJump ) 
+          process_->NextOpCode();
+        else        
+          process_->ModifyIP(op_offset);
       }
       
     }

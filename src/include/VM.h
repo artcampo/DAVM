@@ -7,11 +7,10 @@
 
 
 class VirtualMachine{
-  
+
+public:    
   VirtualMachine(const std::string  &file_name);
   VirtualMachine(const ByteCode     &file_name);
-  
-public:  
   
   bool    ExecProcess();
   void    DumpExecutionContext() const;

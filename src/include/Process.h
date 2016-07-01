@@ -1,5 +1,6 @@
 #pragma once
 #include "ByteCode.h"
+#include "ExecutionContext.h"
 #include <memory>
 #include <stdint.h>
   
@@ -13,7 +14,8 @@ public:
   bool      NextOpCodeIsValid() const;
   uint32_t  GetCurrentOpCode() const;
 
-  
+  void      ModifyIP(uint32_t const &offset);
 private:
   const ByteCode &byte_code_;
+  ExecutionContext  execution_context_;
 };
