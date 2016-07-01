@@ -19,6 +19,9 @@ bool VirtualMachine::ExecProcess(){
       if(current_op_code == IR_STOP){
         executing = false;
       }else{
+        
+
+        
         process_->NextOpCode();
       }
       

@@ -3,8 +3,8 @@
 
 struct ExecutionContext{
   
-  uint32_t                instruction_pointer;
-  RegisterBank<uint32_t>  registers;
+  uint32_t                instruction_pointer_;
+  RegisterBank<uint32_t>  registers_;
 
   
 };
