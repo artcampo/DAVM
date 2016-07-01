@@ -1,6 +1,7 @@
+#pragma once
 #include <vector>
 
-typename<T>
+template <typename T>
 struct RegisterBank{
   
   std::vector<T>  registers;

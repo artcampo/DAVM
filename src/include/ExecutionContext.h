@@ -1,5 +1,6 @@
+#pragma once
 #include <stdint.h>
-#include "registerBank.h"
+#include "RegisterBank.h"
 
 struct ExecutionContext{
   

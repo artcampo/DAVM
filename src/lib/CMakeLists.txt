@@ -9,4 +9,5 @@ set(files
     VM.cpp
 )
 
-add_library(lib STATIC ${files})
+add_definitions( -std=c++11 )
+add_library(VM STATIC ${files})

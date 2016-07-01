@@ -1,7 +1,13 @@
-#include <stdint.h>
+#pragma once
 
-struct ByteCode{
+
+namespace IRCodification{
   
-std::vector<uint32_t> stream;  
+enum IRCodf {
+  IR_NOP   = 0,
+  IR_STOP  = 1,
+  IR_LOAD  = 2,
+  IR_ADD   = 3,
+};
 
 };

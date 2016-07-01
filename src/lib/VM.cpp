@@ -32,8 +32,8 @@ bool VirtualMachine::ExecProcess(){
 }
 
 ByteCode* VirtualMachine::ReadByteCode(const std::string &file_name){
-  //ByteCode* byte_code = new 
-  return 
+  ByteCode* byte_code = new ByteCode();
+  return byte_code;
 }
 
 
@@ -41,5 +41,5 @@ void VirtualMachine::DumpExecutionContext() const{
 }
 
 int VirtualMachine::LoadProcess(const std::string &file_name){
-  std::unique_ptr<ByteCode> byte_code = ReadByteCode(); 
+  std::unique_ptr<ByteCode> byte_code(ReadByteCode(file_name)); 
 }
