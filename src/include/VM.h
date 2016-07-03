@@ -1,7 +1,7 @@
 #pragma once
 #include "ByteCode.h"
 #include "Process.h"
-
+#include "ErrorLog.h"
 
 #include <string>
 #include <memory>
@@ -21,6 +21,7 @@ private:
   
   ByteCode const            &byte_code_;
   std::unique_ptr<Process>  process_;
+  std::unique_ptr<ErrorLog> error_log_;
   
   ByteCode* ReadByteCode(const std::string &file_name);
   

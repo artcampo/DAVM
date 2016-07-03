@@ -36,7 +36,7 @@ uint32_t  DecodeOffset(uint32_t const &op_code);
 bool      checkIRCodification();
 
 namespace IRBuilder{
-  
+uint32_t Stop();
 uint32_t Load(uint32_t const &reg_dst, uint32_t const& literal);
 uint32_t Add(uint32_t const &reg_src1, uint32_t const &reg_src2,
              uint32_t const &reg_dst);

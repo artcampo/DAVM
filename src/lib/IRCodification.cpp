@@ -1,9 +1,10 @@
 #include "IRCodification.h"
+#include <iostream>
 
 namespace IRCodification{
   
 uint32_t DecodeOpCode(uint32_t const &instruction){
-  return instruction && kOpCodeNumberOfBits;
+  return instruction & kOpCodeBitMask;
 }
 
 uint32_t DecodeOffset(uint32_t const &op_code){
@@ -21,8 +22,9 @@ bool checkIRCodification(){
   //ADD
   wellFormed &= ( kOpCodeNumberOfBits 
                 + kRegisterNumberOfBits*3) <= 32;
-    
-                
+  
+  std::cout << "mask: " <<kOpCodeBitMask;
+               
   return wellFormed;
 }
 
@@ -42,6 +44,10 @@ uint32_t Add(uint32_t const &reg_src1,
     + (reg_src1 << kOpCodeNumberOfBits)
     + (reg_src2 << (kOpCodeNumberOfBits + kRegisterNumberOfBits))
     + (reg_dst  << (kOpCodeNumberOfBits + kRegisterNumberOfBits*2));
+}
+
+uint32_t Stop(){
+  return IR_STOP;
 }
 
 }; //namespace IRBuilder

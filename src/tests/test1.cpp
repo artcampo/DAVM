@@ -11,6 +11,7 @@ int main(){
   bc->stream = std::vector<uint32_t> {
     Load( IR_REG0, 12),
     Load( IR_REG1, 15),   
+    Stop()
   };
   
   
@@ -19,6 +20,8 @@ int main(){
     return 1;
   }
   std::cout << "test1 - started" << std::endl;
+  for(auto it : bc->stream)
+    std::cout << it <<", ";
   
   std::unique_ptr<VirtualMachine> vm(new VirtualMachine(*bc) );
   vm->ExecProcess();

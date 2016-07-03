@@ -13,6 +13,7 @@ bool VirtualMachine::ExecProcess(){
     if( not process_->NextOpCodeIsValid() ){
       error     = true;
       executing = false;
+      error_log_->errors.push_back(std::string("Next opcode invalid"));
     }else{
       using namespace IRCodification;
       
@@ -20,19 +21,20 @@ bool VirtualMachine::ExecProcess(){
       uint32_t current_op_code      = DecodeOpCode(current_instruction);
       uint32_t op_offset            = DecodeOffset(current_op_code);
       
+      std::cout << "inst: " <<current_instruction 
+                << " op: " <<current_op_code <<"\n";
       if (current_op_code == IR_STOP){
         executing = false;
       }else{
+        
         std::cout << "OP\n";
         bool instructionHasJump = false;
         switch(current_op_code){
           case IR_LOAD: InstructionLoad(current_instruction);  break;
           case IR_ADD:  InstructionAdd(current_instruction);   break;
-          default:      error = true;                          break;
+          default:      error_log_->errors.push_back(std::string("op not found")); 
+                        error = true;                          break;
         }
-        if (current_op_code == IR_LOAD){
-          
-        }else 
           
 
         if (not instructionHasJump ) 
@@ -53,7 +55,8 @@ bool VirtualMachine::ExecProcess(){
 
 VirtualMachine::VirtualMachine(ByteCode const &byte_code)
   : byte_code_(byte_code)
-  , process_(new Process(byte_code_)){
+  , process_(new Process(byte_code_))
+  , error_log_( new ErrorLog()){
 }
 
 ByteCode* VirtualMachine::ReadByteCode(const std::string &file_name){
@@ -63,7 +66,13 @@ ByteCode* VirtualMachine::ReadByteCode(const std::string &file_name){
 
 
 void VirtualMachine::DumpExecutionContext(int const registers_num) const{
-  process_->DumpExecutionContext(registers_num);
+  if(error_log_->errors.size() == 0)
+    process_->DumpExecutionContext(registers_num);
+  else{
+    std::cout << "Errors in execution:" << std::endl;
+    for(auto it : error_log_->errors)
+      std::cout << it << "\n";
+  }
 }
 
 int VirtualMachine::LoadProcess(const std::string &file_name){
