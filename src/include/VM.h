@@ -9,18 +9,22 @@
 class VirtualMachine{
 
 public:    
-  VirtualMachine(const std::string  &file_name);
-  VirtualMachine(const ByteCode     &file_name);
+//   VirtualMachine(std::string const &file_name);
+  VirtualMachine(ByteCode const &byte_code);
   
   bool    ExecProcess();
-  void    DumpExecutionContext() const;
+  void    DumpExecutionContext(int const registers_num = 5) const;
 
 private:  
   int     LoadProcess(const std::string &file_name);
   
-  std::unique_ptr<ByteCode> byte_code_;
+  ByteCode const &byte_code_;
   std::unique_ptr<Process>  process_;
   
   ByteCode* ReadByteCode(const std::string &file_name);
+  
+private:
+  void InstructionLoad(uint32_t const &current_instruction);
+  void InstructionAdd (uint32_t const &current_instruction);
   
 };

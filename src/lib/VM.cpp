@@ -45,15 +45,34 @@ bool VirtualMachine::ExecProcess(){
   return error;
 }
 
+// VirtualMachine::VirtualMachine(std::string const &file_name){
+//   byte_code_ = 
+// }
+
+VirtualMachine::VirtualMachine(ByteCode const &byte_code)
+  : byte_code_(byte_code)
+  , process_(new Process(byte_code_)){
+}
+
 ByteCode* VirtualMachine::ReadByteCode(const std::string &file_name){
   ByteCode* byte_code = new ByteCode();
   return byte_code;
 }
 
 
-void VirtualMachine::DumpExecutionContext() const{
+void VirtualMachine::DumpExecutionContext(int const registers_num) const{
 }
 
 int VirtualMachine::LoadProcess(const std::string &file_name){
   std::unique_ptr<ByteCode> byte_code(ReadByteCode(file_name)); 
 }
+
+// #include "VM_instructions_implementation.cpp"
+void VirtualMachine::InstructionLoad(uint32_t const &current_instruction){
+  
+}
+
+void VirtualMachine::InstructionAdd (uint32_t const &current_instruction){
+  
+}
+  
