@@ -2,12 +2,13 @@
 #include "IRCodification.h"
 #include "RegisterBank.h"
 #include <stdint.h>
-
+#include <iostream>
 
 bool VirtualMachine::ExecProcess(){
   bool executing  = true;
-  bool error      = true;
+  bool error      = false;
   
+  std::cout << "EXEC\n";
   while(executing and not error){
     if( not process_->NextOpCodeIsValid() ){
       error     = true;
@@ -22,6 +23,7 @@ bool VirtualMachine::ExecProcess(){
       if (current_op_code == IR_STOP){
         executing = false;
       }else{
+        std::cout << "OP\n";
         bool instructionHasJump = false;
         switch(current_op_code){
           case IR_LOAD: InstructionLoad(current_instruction);  break;
@@ -70,7 +72,7 @@ int VirtualMachine::LoadProcess(const std::string &file_name){
 
 // #include "VM_instructions_implementation.cpp"
 void VirtualMachine::InstructionLoad(uint32_t const &current_instruction){
-  
+  std::cout << "LOAD\n";
 }
 
 void VirtualMachine::InstructionAdd (uint32_t const &current_instruction){

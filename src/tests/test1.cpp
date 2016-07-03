@@ -13,8 +13,14 @@ int main(){
     Load( IR_REG1, 15),   
   };
   
-  std::unique_ptr<VirtualMachine> vm(new VirtualMachine(*bc) );
   
+  if(!checkIRCodification()){
+    std::cout << "IR sizes invalid\n";
+    return 1;
+  }
+  std::cout << "test1 - started" << std::endl;
+  
+  std::unique_ptr<VirtualMachine> vm(new VirtualMachine(*bc) );
   vm->ExecProcess();
   vm->DumpExecutionContext();
   
