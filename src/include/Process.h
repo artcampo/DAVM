@@ -7,7 +7,8 @@
 class Process{
   
 public:  
-  Process(const ByteCode &byte_code) : byte_code_(byte_code){};
+  Process(const ByteCode &byte_code) : byte_code_(byte_code),
+    execution_context_(){};
     
   void NextOpCode();
   
@@ -15,7 +16,9 @@ public:
   uint32_t  GetCurrentOpCode() const;
 
   void      ModifyIP(uint32_t const &offset);
+  
+  void DumpExecutionContext(int const registers_num = 5) const;
 private:
-  const ByteCode &byte_code_;
+  const ByteCode    &byte_code_;
   ExecutionContext  execution_context_;
 };

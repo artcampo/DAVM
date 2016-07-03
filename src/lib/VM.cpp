@@ -1,7 +1,7 @@
 #include "VM.h"
-#include <stdint.h>
 #include "IRCodification.h"
-
+#include "RegisterBank.h"
+#include <stdint.h>
 
 
 bool VirtualMachine::ExecProcess(){
@@ -61,6 +61,7 @@ ByteCode* VirtualMachine::ReadByteCode(const std::string &file_name){
 
 
 void VirtualMachine::DumpExecutionContext(int const registers_num) const{
+  process_->DumpExecutionContext(registers_num);
 }
 
 int VirtualMachine::LoadProcess(const std::string &file_name){

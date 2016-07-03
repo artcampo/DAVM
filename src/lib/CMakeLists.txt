@@ -7,7 +7,8 @@ set(files
     Process.cpp
     RegisterBank.cpp
     VM.cpp
+    IRCodification.cpp
 )
 
-add_definitions( -std=c++11 )
+add_definitions( -std=c++11 -g)
 add_library(VM STATIC ${files})

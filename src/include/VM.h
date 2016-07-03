@@ -2,6 +2,7 @@
 #include "ByteCode.h"
 #include "Process.h"
 
+
 #include <string>
 #include <memory>
 
@@ -18,7 +19,7 @@ public:
 private:  
   int     LoadProcess(const std::string &file_name);
   
-  ByteCode const &byte_code_;
+  ByteCode const            &byte_code_;
   std::unique_ptr<Process>  process_;
   
   ByteCode* ReadByteCode(const std::string &file_name);

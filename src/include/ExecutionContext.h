@@ -7,5 +7,5 @@ struct ExecutionContext{
   uint32_t                instruction_pointer_;
   RegisterBank<uint32_t>  registers_;
 
-  
+  ExecutionContext():instruction_pointer_(0), registers_(){};
 };
