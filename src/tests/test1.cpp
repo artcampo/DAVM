@@ -20,9 +20,9 @@ int main(){
     std::cout << "IR sizes invalid\n";
     return 1;
   }
-  std::cout << "test1 - started" << std::endl;
-  for(auto it : bc->stream)
-    std::cout << it <<", ";
+//   std::cout << "test1 - started" << std::endl;
+//   for(auto it : bc->stream)
+//     std::cout << it <<", ";
   
   std::unique_ptr<VirtualMachine> vm(new VirtualMachine(*bc) );
   vm->ExecProcess();

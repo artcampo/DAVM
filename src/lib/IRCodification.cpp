@@ -23,7 +23,7 @@ bool checkIRCodification(){
   wellFormed &= ( kOpCodeNumberOfBits 
                 + kRegisterNumberOfBits*3) <= 32;
   
-  std::cout << "mask: " <<kOpCodeBitMask;
+//   std::cout << "mask: " <<kOpCodeBitMask;
                
   return wellFormed;
 }
