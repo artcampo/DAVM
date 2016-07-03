@@ -40,11 +40,12 @@ bool      checkIRCodification();
 
 namespace IRBuilder{
 uint32_t Stop();
-uint32_t Load(uint32_t const &reg_dst, uint32_t const& literal);
+uint32_t Load(uint32_t const &reg_dst, uint32_t const &literal);
+uint32_t Add(uint32_t const &reg_src1, uint32_t const &reg_src2,
+             uint32_t const &reg_dst);
+
 void DecodeLoad(uint32_t const instruction, uint32_t &reg_dst, 
                 uint32_t &literal);
-uint32_t Add(uint32_t const &reg_src1, uint32_t &reg_src2,
-             uint32_t &reg_dst);
 void DecodeAdd(uint32_t const instruction, uint32_t &reg_src1, 
                uint32_t &reg_src2, uint32_t &reg_dst);
 

@@ -93,5 +93,8 @@ void VirtualMachine::InstructionLoad(uint32_t const &current_instruction){
 void VirtualMachine::InstructionAdd (uint32_t const &current_instruction){
   uint32_t reg_src1, reg_src2, reg_dst;
   DecodeAdd(current_instruction, reg_src1, reg_src2, reg_dst);
+  process_->execution_context_.registers_.registers[reg_dst] = 
+      process_->execution_context_.registers_.registers[reg_src1]
+    + process_->execution_context_.registers_.registers[reg_src2];
 }
   
