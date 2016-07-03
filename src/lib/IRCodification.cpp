@@ -36,6 +36,14 @@ uint32_t Load(uint32_t const &reg_dst, uint32_t const& literal){
     + (literal << (kOpCodeNumberOfBits + kRegisterNumberOfBits));
 }
 
+void DecodeLoad(uint32_t const instruction, uint32_t &reg_dst, 
+                uint32_t &literal){
+  reg_dst = (instruction >> kOpCodeNumberOfBits) & kRegistertMask;
+  literal = (instruction >> (kOpCodeNumberOfBits + kRegisterNumberOfBits))
+            & kLiteraltMask;
+}
+
+
 uint32_t Add(uint32_t const &reg_src1, 
              uint32_t const &reg_src2,
              uint32_t const &reg_dst
@@ -45,6 +53,17 @@ uint32_t Add(uint32_t const &reg_src1,
     + (reg_src2 << (kOpCodeNumberOfBits + kRegisterNumberOfBits))
     + (reg_dst  << (kOpCodeNumberOfBits + kRegisterNumberOfBits*2));
 }
+
+void DecodeAdd(uint32_t const instruction, uint32_t &reg_src1, 
+               uint32_t &reg_src2, uint32_t &reg_dst){
+  
+  reg_src1 = (instruction >> kOpCodeNumberOfBits) & kRegistertMask;
+  reg_src2 = (instruction >> (kOpCodeNumberOfBits + kRegisterNumberOfBits))
+            & kRegistertMask;
+  reg_dst  = (instruction >> (kOpCodeNumberOfBits + kRegisterNumberOfBits*2))
+            & kRegistertMask;            
+}
+
 
 uint32_t Stop(){
   return IR_STOP;

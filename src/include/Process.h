@@ -4,6 +4,8 @@
 #include <memory>
 #include <stdint.h>
   
+class VirtualMachine;
+  
 class Process{
   
 public:  
@@ -21,4 +23,5 @@ public:
 private:
   const ByteCode    &byte_code_;
   ExecutionContext  execution_context_;
+  friend class VirtualMachine;
 };

@@ -80,11 +80,18 @@ int VirtualMachine::LoadProcess(const std::string &file_name){
 }
 
 // #include "VM_instructions_implementation.cpp"
+using namespace IRCodification;
+using namespace IRBuilder;
+  
 void VirtualMachine::InstructionLoad(uint32_t const &current_instruction){
   std::cout << "LOAD\n";
+  uint32_t reg_dst, literal;
+  DecodeLoad(current_instruction, reg_dst, literal);
+  process_->execution_context_.registers_.registers[reg_dst] = literal;
 }
 
 void VirtualMachine::InstructionAdd (uint32_t const &current_instruction){
-  
+  uint32_t reg_src1, reg_src2, reg_dst;
+  DecodeAdd(current_instruction, reg_src1, reg_src2, reg_dst);
 }
   

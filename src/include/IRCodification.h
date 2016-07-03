@@ -27,9 +27,12 @@ enum IRRegisters {
 
 
 const static int kOpCodeNumberOfBits   = 3;
-const static int kOpCodeBitMask        = (1 << kOpCodeNumberOfBits) - 1;
 const static int kRegisterNumberOfBits = 4;
 const static int kLiteralNumberOfBits  = 16;
+
+const static int kOpCodeBitMask = (1 << kOpCodeNumberOfBits) - 1;
+const static int kRegistertMask = (1 << kRegisterNumberOfBits) - 1;
+const static int kLiteraltMask  = (1 << kLiteralNumberOfBits) - 1;
 
 uint32_t  DecodeOpCode(uint32_t const &instruction);
 uint32_t  DecodeOffset(uint32_t const &op_code);
@@ -38,8 +41,13 @@ bool      checkIRCodification();
 namespace IRBuilder{
 uint32_t Stop();
 uint32_t Load(uint32_t const &reg_dst, uint32_t const& literal);
-uint32_t Add(uint32_t const &reg_src1, uint32_t const &reg_src2,
-             uint32_t const &reg_dst);
+void DecodeLoad(uint32_t const instruction, uint32_t &reg_dst, 
+                uint32_t &literal);
+uint32_t Add(uint32_t const &reg_src1, uint32_t &reg_src2,
+             uint32_t &reg_dst);
+void DecodeAdd(uint32_t const instruction, uint32_t &reg_src1, 
+               uint32_t &reg_src2, uint32_t &reg_dst);
+
 
 
 }; //namespace IRBuilder
