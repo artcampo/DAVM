@@ -2,12 +2,37 @@
 #include <stdint.h>
 
 namespace IRCodification{
-  
+
+const static int kClassNumberOfBits    = 2;
+const static int kOpCodeNumberOfBits   = 3;
+const static int kRegisterNumberOfBits = 4;
+const static int kLiteralNumberOfBits  = 16;
+
+const static int kClassBitMask =  (1 << kClassNumberOfBits) - 1;  
+const static int kOpCodeBitMask = (1 << kOpCodeNumberOfBits) - 1;
+const static int kRegistertMask = (1 << kRegisterNumberOfBits) - 1;
+const static int kLiteraltMask  = (1 << kLiteralNumberOfBits) - 1;
+
+enum InstClasses{
+  InstClassNoReg        = 0,
+  InstClassRegLit       = 1,
+  InstClassRegLitSub    = 2,
+  InstClassRegRegRegSub = 3
+};
+
 enum IRCodf {
-  IR_NOP   = 0,
-  IR_STOP  = 1,
-  IR_LOAD  = 2,
-  IR_ADD   = 3,
+  IR_NOP   = InstClassNoReg + (0 << kClassNumberOfBits),
+  IR_STOP  = InstClassNoReg + (1 << kClassNumberOfBits),
+  
+  IR_JMP   = InstClassRegLit + (0 << kClassNumberOfBits),
+  IR_LOAD  = InstClassRegLit + (1 << kClassNumberOfBits),
+  IR_CALL  = InstClassRegLit + (2 << kClassNumberOfBits),
+  
+  IR_JMPC  = InstClassRegLitSub + (0 << kClassNumberOfBits),
+  IR_ARII  = InstClassRegLitSub + (1 << kClassNumberOfBits),
+  
+  IR_ADD   = InstClassRegRegRegSub + (0 << kClassNumberOfBits),
+  IR_CMP   = InstClassRegRegRegSub + (1 << kClassNumberOfBits),
 };
 
 enum IRRegisters {
@@ -25,14 +50,6 @@ enum IRRegisters {
   IR_REG11 = 11,
 };
 
-
-const static int kOpCodeNumberOfBits   = 3;
-const static int kRegisterNumberOfBits = 4;
-const static int kLiteralNumberOfBits  = 16;
-
-const static int kOpCodeBitMask = (1 << kOpCodeNumberOfBits) - 1;
-const static int kRegistertMask = (1 << kRegisterNumberOfBits) - 1;
-const static int kLiteraltMask  = (1 << kLiteralNumberOfBits) - 1;
 
 uint32_t  DecodeOpCode(uint32_t const &instruction);
 uint32_t  DecodeOffset(uint32_t const &op_code);

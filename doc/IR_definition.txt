@@ -1,1 +1,22 @@
-empty
+Classes of instructions:
+
+- 3 regs, subtype
+arithmetic
+comparison
+
+- 1 reg, literal
+load
+jmp
+call
+
+- 1 reg, literal, subtype
+jmpc
+arithmeticInmediate
+
+- 0 reg
+stop
+ret
+
+subtypes 
+comparison: ==, !=, <, !
+arith: +,-,/,*
