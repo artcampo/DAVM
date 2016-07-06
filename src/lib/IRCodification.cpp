@@ -14,32 +14,50 @@ uint32_t DecodeOffset(uint32_t const &op_code){
 bool checkIRCodification(){
   bool wellFormed = true;
   
-  //LOAD
-  wellFormed &= ( kOpCodeNumberOfBits 
+  //Class 0
+  wellFormed &= ( kClassNumberOfBits
+                + kClass0NumberOfBits 
+                + kRegisterNumberOfBits
+                + kLiteralNumberOfBits) <= 32;
+ //Class 1
+  wellFormed &= ( kClassNumberOfBits
+                + kClass1NumberOfBits 
                 + kRegisterNumberOfBits
                 + kLiteralNumberOfBits) <= 32;
 
-  //ADD
-  wellFormed &= ( kOpCodeNumberOfBits 
-                + kRegisterNumberOfBits*3) <= 32;
-  
-//   std::cout << "mask: " <<kOpCodeBitMask;
-               
+ //Class 2
+  wellFormed &= ( kClassNumberOfBits
+                + kClass2NumberOfBits 
+                + kRegisterNumberOfBits
+                + kLiteralNumberOfBits
+                + kSubtypeNumberOfBits) <= 32;                
+ //Class 3
+  wellFormed &= ( kClassNumberOfBits
+                + kClass3NumberOfBits 
+                + kRegisterNumberOfBits*3
+                + kSubtypeNumberOfBits) <= 32;  
+                
   return wellFormed;
 }
 
 namespace IRBuilder{
-  
-uint32_t Load(uint32_t const &reg_dst, uint32_t const& literal){
-  return IR_LOAD
-    + (reg_dst <<  kOpCodeNumberOfBits)
-    + (literal << (kOpCodeNumberOfBits + kRegisterNumberOfBits));
+
+uint32_t CodeClass1(uint32_t const &reg_dst, uint32_t const& literal,
+                    uint32_t const &type){
+  return type
+    + (reg_dst << (kClass1OpcodeNumberOfBits))
+    + (literal << (kClass1OpcodeNumberOfBits+ kRegisterNumberOfBits));
 }
 
-void DecodeLoad(uint32_t const instruction, uint32_t &reg_dst, 
+uint32_t Load(uint32_t const &reg_dst, uint32_t const& literal){
+  return CodeClass1(reg_dst, literal, IR_LOAD);
+}
+
+void DecodeClass1(uint32_t const instruction, uint32_t &reg_dst, 
                 uint32_t &literal){
-  reg_dst = (instruction >> kOpCodeNumberOfBits) & kRegistertMask;
-  literal = (instruction >> (kOpCodeNumberOfBits + kRegisterNumberOfBits))
+  reg_dst = (instruction >> kClass1OpcodeNumberOfBits) 
+            & kRegistertMask;
+  literal = (instruction >> (kClass1OpcodeNumberOfBits + kRegisterNumberOfBits))
             & kLiteraltMask;
 }
 

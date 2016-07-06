@@ -4,14 +4,29 @@
 namespace IRCodification{
 
 const static int kClassNumberOfBits    = 2;
+  const static int kClass0NumberOfBits    = 1;
+  const static int kClass1NumberOfBits    = 2;
+  const static int kClass2NumberOfBits    = 1;
+  const static int kClass3NumberOfBits    = 1;
+  const static int kClass0OpcodeNumberOfBits = kClassNumberOfBits 
+                                             + kClass0NumberOfBits;
+  const static int kClass1OpcodeNumberOfBits = kClassNumberOfBits 
+                                             + kClass1NumberOfBits;
+  const static int kClass2OpcodeNumberOfBits = kClassNumberOfBits 
+                                             + kClass2NumberOfBits;
+  const static int kClass3OpcodeNumberOfBits = kClassNumberOfBits 
+                                             + kClass3NumberOfBits;
 const static int kOpCodeNumberOfBits   = 3;
 const static int kRegisterNumberOfBits = 4;
 const static int kLiteralNumberOfBits  = 16;
+const static int kSubtypeNumberOfBits  = 2;
 
 const static int kClassBitMask =  (1 << kClassNumberOfBits) - 1;  
 const static int kOpCodeBitMask = (1 << kOpCodeNumberOfBits) - 1;
 const static int kRegistertMask = (1 << kRegisterNumberOfBits) - 1;
 const static int kLiteraltMask  = (1 << kLiteralNumberOfBits) - 1;
+
+
 
 enum InstClasses{
   InstClassNoReg        = 0,
@@ -56,17 +71,16 @@ uint32_t  DecodeOffset(uint32_t const &op_code);
 bool      checkIRCodification();
 
 namespace IRBuilder{
+  
 uint32_t Stop();
 uint32_t Load(uint32_t const &reg_dst, uint32_t const &literal);
 uint32_t Add(uint32_t const &reg_src1, uint32_t const &reg_src2,
              uint32_t const &reg_dst);
 
-void DecodeLoad(uint32_t const instruction, uint32_t &reg_dst, 
-                uint32_t &literal);
-void DecodeAdd(uint32_t const instruction, uint32_t &reg_src1, 
-               uint32_t &reg_src2, uint32_t &reg_dst);
-
-
+uint32_t CodeClass1(uint32_t const &reg_dst, uint32_t const& literal,
+                    uint32_t const &type);
+void DecodeClass1(uint32_t const instruction, uint32_t &reg_dst, 
+                uint32_t &literal)
 
 }; //namespace IRBuilder
 
