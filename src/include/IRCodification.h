@@ -26,7 +26,9 @@ const static int kOpCodeBitMask = (1 << kOpCodeNumberOfBits) - 1;
 const static int kRegistertMask = (1 << kRegisterNumberOfBits) - 1;
 const static int kLiteraltMask  = (1 << kLiteralNumberOfBits) - 1;
 
+const static int kClass3TypeNumberOfBits    = 1;
 
+const static int kClass3TypeBitMask =  (1 << kClass3TypeNumberOfBits) - 1;  
 
 enum InstClasses{
   InstClassNoReg        = 0,
@@ -46,8 +48,15 @@ enum IRCodf {
   IR_JMPC  = InstClassRegLitSub + (0 << kClassNumberOfBits),
   IR_ARII  = InstClassRegLitSub + (1 << kClassNumberOfBits),
   
-  IR_ADD   = InstClassRegRegRegSub + (0 << kClassNumberOfBits),
+  IR_ARI   = InstClassRegRegRegSub + (0 << kClassNumberOfBits),
   IR_CMP   = InstClassRegRegRegSub + (1 << kClassNumberOfBits),
+};
+
+enum IRSubtypesArithmetic{
+  IR_ADD = 0,
+  IR_SUB = 1,
+  IR_MUL = 2,
+  IR_DIV = 3
 };
 
 enum IRRegisters {

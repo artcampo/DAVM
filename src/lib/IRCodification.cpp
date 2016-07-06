@@ -49,8 +49,16 @@ uint32_t CodeClass1(uint32_t const &reg_dst, uint32_t const& literal,
     + (literal << (kClass1OpcodeNumberOfBits+ kRegisterNumberOfBits));
 }
 
-uint32_t Load(uint32_t const &reg_dst, uint32_t const& literal){
-  return CodeClass1(reg_dst, literal, IR_LOAD);
+uint32_t CodeClass3(uint32_t const &reg_src1, uint32_t const &reg_src2
+                   ,uint32_t const &reg_dst, uint32_t const &type
+                   ,uint32_t const &subtype){
+  return type
+    + (subtype  << (kClass3OpcodeNumberOfBits))
+    + (reg_src1 << (kClass3OpcodeNumberOfBits + kSubtypeNumberOfBits))
+    + (reg_src2 << (kClass3OpcodeNumberOfBits + kSubtypeNumberOfBits
+                    + kRegisterNumberOfBits))
+    + (reg_dst  << (kClass3OpcodeNumberOfBits + kSubtypeNumberOfBits
+                    + kRegisterNumberOfBits*2));
 }
 
 void DecodeClass1(uint32_t const instruction, uint32_t &reg_dst, 
@@ -61,26 +69,37 @@ void DecodeClass1(uint32_t const instruction, uint32_t &reg_dst,
             & kLiteraltMask;
 }
 
+void DecodeClass3(uint32_t const instruction, uint32_t &reg_src1
+                 ,uint32_t &reg_src2, uint32_t &reg_dst
+                 ,uint32_t &type, uint32_t &subtype){
+  
+  type     = (instruction >> kClassNumberOfBits) 
+           & kClass3TypeBitMask;
+  subtype  = (instruction >> (kClass3NumberOfBits + kClassNumberOfBits)) 
+           & kSubtypeNumberOfBits;
+  reg_src1 = (instruction >> (kClass3NumberOfBits + kClassNumberOfBits 
+                              + kSubtypeNumberOfBits)) 
+           & kRegistertMask;
+  reg_src2 = (instruction >> (kClass3NumberOfBits + kClassNumberOfBits 
+                              + kSubtypeNumberOfBits + kRegisterNumberOfBits)) 
+           & kRegistertMask;
+  reg_dst  = (instruction >> (kClass3NumberOfBits + kClassNumberOfBits 
+                              + kSubtypeNumberOfBits + kRegisterNumberOfBits*2))
+           & kRegistertMask;            
+}
+
+uint32_t Load(uint32_t const &reg_dst, uint32_t const& literal){
+  return CodeClass1(reg_dst, literal, IR_LOAD);
+}
 
 uint32_t Add(uint32_t const &reg_src1, 
              uint32_t const &reg_src2,
              uint32_t const &reg_dst
             ){
-  return IR_ADD 
-    + (reg_src1 << kOpCodeNumberOfBits)
-    + (reg_src2 << (kOpCodeNumberOfBits + kRegisterNumberOfBits))
-    + (reg_dst  << (kOpCodeNumberOfBits + kRegisterNumberOfBits*2));
+  return CodeClass3(reg_src1, reg_src2, reg_dst, IR_ARI, IR_ADD);
 }
 
-void DecodeAdd(uint32_t const instruction, uint32_t &reg_src1, 
-               uint32_t &reg_src2, uint32_t &reg_dst){
-  
-  reg_src1 = (instruction >> kOpCodeNumberOfBits) & kRegistertMask;
-  reg_src2 = (instruction >> (kOpCodeNumberOfBits + kRegisterNumberOfBits))
-            & kRegistertMask;
-  reg_dst  = (instruction >> (kOpCodeNumberOfBits + kRegisterNumberOfBits*2))
-            & kRegistertMask;            
-}
+
 
 
 uint32_t Stop(){
