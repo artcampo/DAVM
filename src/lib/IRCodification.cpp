@@ -7,6 +7,23 @@ uint32_t DecodeOpCode(uint32_t const &instruction){
   return instruction & kOpCodeBitMask;
 }
 
+uint32_t  DecodeClass (uint32_t const &instruction){
+  return instruction & kClassBitMask;
+}
+
+
+uint32_t  DecodeType (uint32_t const &instruction){
+  if( DecodeClass(instruction) == InstClassNoReg )
+    return (instruction >> kClassNumberOfBits) & kClass0BitMask;
+  else if( DecodeClass(instruction) == InstClassRegLit )
+    return (instruction >> kClassNumberOfBits) & kClass1BitMask;
+  else if( DecodeClass(instruction) == InstClassRegLitSub )
+    return (instruction >> kClassNumberOfBits) & kClass2BitMask;
+ else //if( DecodeClass(instruction) == InstClassRegRegRegSub )
+    return (instruction >> kClassNumberOfBits) & kClass3BitMask;
+}
+
+
 uint32_t DecodeOffset(uint32_t const &op_code){
   return op_code >> kOpCodeNumberOfBits;
 }
@@ -88,6 +105,7 @@ void DecodeClass3(uint32_t const instruction, uint32_t &reg_src1
            & kRegistertMask;            
 }
 
+
 uint32_t Load(uint32_t const &reg_dst, uint32_t const& literal){
   return CodeClass1(reg_dst, literal, IR_LOAD);
 }
@@ -100,11 +118,19 @@ uint32_t Add(uint32_t const &reg_src1,
 }
 
 
-
-
 uint32_t Stop(){
   return IR_STOP;
 }
+
+// static const std::string opcodes[1][2] = { {"a","b"}};
+/*
+std::string PrintInstruction(uint32_t const &instruction){
+  uint32_t const inst_class = DecodeClass(instruction);
+  uint32_t const inst_type  = DecodeType(instruction);
+  
+  return std::string("none");
+}
+*/
 
 }; //namespace IRBuilder
 

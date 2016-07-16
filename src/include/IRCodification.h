@@ -1,5 +1,6 @@
 #pragma once
 #include <stdint.h>
+#include <string>
 
 namespace IRCodification{
 
@@ -22,6 +23,10 @@ const static int kLiteralNumberOfBits  = 16;
 const static int kSubtypeNumberOfBits  = 2;
 
 const static int kClassBitMask =  (1 << kClassNumberOfBits) - 1;  
+  const static int kClass0BitMask =  (1 << kClass0NumberOfBits) - 1; 
+  const static int kClass1BitMask =  (1 << kClass1NumberOfBits) - 1; 
+  const static int kClass2BitMask =  (1 << kClass2NumberOfBits) - 1; 
+  const static int kClass3BitMask =  (1 << kClass3NumberOfBits) - 1; 
 const static int kOpCodeBitMask = (1 << kOpCodeNumberOfBits) - 1;
 const static int kRegistertMask = (1 << kRegisterNumberOfBits) - 1;
 const static int kLiteraltMask  = (1 << kLiteralNumberOfBits) - 1;
@@ -75,9 +80,13 @@ enum IRRegisters {
 };
 
 
+uint32_t  DecodeClass (uint32_t const &instruction);
+uint32_t  DecodeType  (uint32_t const &instruction);
 uint32_t  DecodeOpCode(uint32_t const &instruction);
 uint32_t  DecodeOffset(uint32_t const &op_code);
 bool      checkIRCodification();
+
+std::string PrintInstruction(uint32_t const &instruction);
 
 namespace IRBuilder{
   
