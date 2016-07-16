@@ -1,1 +1,5 @@
+- runtime type checking as policy
+- error log as policy
+- implement memory
+- implement stack
 - Set release/debug versions
