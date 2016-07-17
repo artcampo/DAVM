@@ -24,20 +24,21 @@ bool VirtualMachine::ExecProcess(){
       uint32_t const current_op_code      = DecodeOpCode(current_class, current_type);
       uint32_t reg_src1, reg_src2, reg_dst, sub_type, literal, op_offset;
 
-//       std::cout << "inst: " <<current_instruction 
-//                 << " op: " <<current_op_code <<"\n";
+      std::cout << "inst: " <<current_instruction 
+                << " op: " <<current_op_code <<"\n";
       if (current_op_code == IR_STOP){
+        std::cout << "STOP\n";
         executing = false;
       }else{
         
-        std::cout << "OP\n";
+        std::cout << "OP: ";
         bool instructionHasJump = false;
         
         switch(current_class){
           ////////////////////////////////////////////////////////////
           case InstClassNoReg:
             switch(current_op_code){
-              default:      error_log_->errors.push_back(std::string("op not found")); 
+              default:      error_log_->errors.push_back(std::string("op not found (c0)")); 
                             error = true;                          break;
             }
             break;
@@ -47,7 +48,7 @@ bool VirtualMachine::ExecProcess(){
             DecodeClass1(current_instruction, reg_dst, literal);
             switch(current_op_code){
               case IR_LOAD: InstructionLoad(reg_dst, literal);     break;
-              default:      error_log_->errors.push_back(std::string("op not found")); 
+              default:      error_log_->errors.push_back(std::string("op not found (c1)")); 
                             error = true;                          break;
             }
             break;
@@ -55,7 +56,7 @@ bool VirtualMachine::ExecProcess(){
           ////////////////////////////////////////////////////////////
           case InstClassRegLitSub:
             switch(current_op_code){
-              default:      error_log_->errors.push_back(std::string("op not found")); 
+              default:      error_log_->errors.push_back(std::string("op not found (c2)")); 
                             error = true;                          break;
             }
             break;
@@ -65,7 +66,7 @@ bool VirtualMachine::ExecProcess(){
             DecodeClass3(current_instruction, reg_src1, reg_src2, reg_dst, sub_type);
             switch(current_op_code){
               case IR_ADD:  InstructionAdd(reg_src1, reg_src2, reg_dst);   break;
-              default:      error_log_->errors.push_back(std::string("op not found")); 
+              default:      error_log_->errors.push_back(std::string("op not found (c3)")); 
                             error = true;                          break;
             }
             break;
@@ -81,7 +82,7 @@ bool VirtualMachine::ExecProcess(){
           process_->NextOpCode();
         else        
           process_->ModifyIP(op_offset);
-      }
+      }// end of if (current_op_code == IR_STOP){
       
     }
   }
