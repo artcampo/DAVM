@@ -2,10 +2,6 @@
 #include <iostream>
 
 namespace IRCodification{
-  
-uint32_t DecodeOpCode(uint32_t const &instruction){
-  return instruction & kOpCodeBitMask;
-}
 
 uint32_t  DecodeClass (uint32_t const &instruction){
   return instruction & kClassBitMask;
@@ -24,9 +20,10 @@ uint32_t  DecodeType (uint32_t const &instruction){
 }
 
 
-uint32_t DecodeOffset(uint32_t const &op_code){
-  return op_code >> kOpCodeNumberOfBits;
+uint32_t  DecodeOpCode(uint32_t const &inst_class, uint32_t const &inst_type){
+  return inst_class + (inst_type << kClassNumberOfBits);
 }
+
 
 bool checkIRCodification(){
   bool wellFormed = true;
@@ -87,11 +84,8 @@ void DecodeClass1(uint32_t const instruction, uint32_t &reg_dst,
 }
 
 void DecodeClass3(uint32_t const instruction, uint32_t &reg_src1
-                 ,uint32_t &reg_src2, uint32_t &reg_dst
-                 ,uint32_t &type, uint32_t &subtype){
+                 ,uint32_t &reg_src2, uint32_t &reg_dst, uint32_t &subtype){
   
-  type     = (instruction >> kClassNumberOfBits) 
-           & kClass3TypeBitMask;
   subtype  = (instruction >> (kClass3NumberOfBits + kClassNumberOfBits)) 
            & kSubtypeNumberOfBits;
   reg_src1 = (instruction >> (kClass3NumberOfBits + kClassNumberOfBits 

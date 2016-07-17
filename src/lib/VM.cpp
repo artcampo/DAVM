@@ -16,24 +16,64 @@ bool VirtualMachine::ExecProcess(){
       error_log_->errors.push_back(std::string("Next opcode invalid"));
     }else{
       using namespace IRCodification;
+      using namespace IRBuilder;
       
-      uint32_t current_instruction  = process_->GetCurrentOpCode();
-      uint32_t current_op_code      = DecodeOpCode(current_instruction);
-      uint32_t op_offset            = DecodeOffset(current_op_code);
-      
-      std::cout << "inst: " <<current_instruction 
-                << " op: " <<current_op_code <<"\n";
+      uint32_t const current_instruction  = process_->GetCurrentOpCode();
+      uint32_t const current_class        = DecodeClass(current_instruction);
+      uint32_t const current_type         = DecodeType(current_instruction);
+      uint32_t const current_op_code      = DecodeOpCode(current_class, current_type);
+      uint32_t reg_src1, reg_src2, reg_dst, sub_type, literal, op_offset;
+
+//       std::cout << "inst: " <<current_instruction 
+//                 << " op: " <<current_op_code <<"\n";
       if (current_op_code == IR_STOP){
         executing = false;
       }else{
         
         std::cout << "OP\n";
         bool instructionHasJump = false;
-        switch(current_op_code){
-          case IR_LOAD: InstructionLoad(current_instruction);  break;
-          case IR_ADD:  InstructionAdd(current_instruction);   break;
-          default:      error_log_->errors.push_back(std::string("op not found")); 
+        
+        switch(current_class){
+          ////////////////////////////////////////////////////////////
+          case InstClassNoReg:
+            switch(current_op_code){
+              default:      error_log_->errors.push_back(std::string("op not found")); 
+                            error = true;                          break;
+            }
+            break;
+            
+          ////////////////////////////////////////////////////////////
+          case InstClassRegLit:
+            DecodeClass1(current_instruction, reg_dst, literal);
+            switch(current_op_code){
+              case IR_LOAD: InstructionLoad(reg_dst, literal);     break;
+              default:      error_log_->errors.push_back(std::string("op not found")); 
+                            error = true;                          break;
+            }
+            break;
+            
+          ////////////////////////////////////////////////////////////
+          case InstClassRegLitSub:
+            switch(current_op_code){
+              default:      error_log_->errors.push_back(std::string("op not found")); 
+                            error = true;                          break;
+            }
+            break;
+            
+          ////////////////////////////////////////////////////////////
+          case InstClassRegRegRegSub:
+            DecodeClass3(current_instruction, reg_src1, reg_src2, reg_dst, sub_type);
+            switch(current_op_code){
+              case IR_ADD:  InstructionAdd(reg_src1, reg_src2, reg_dst);   break;
+              default:      error_log_->errors.push_back(std::string("op not found")); 
+                            error = true;                          break;
+            }
+            break;
+          
+          ////////////////////////////////////////////////////////////
+          default:      error_log_->errors.push_back(std::string("class not found")); 
                         error = true;                          break;
+        
         }
           
 
@@ -83,16 +123,13 @@ int VirtualMachine::LoadProcess(const std::string &file_name){
 using namespace IRCodification;
 using namespace IRBuilder;
   
-void VirtualMachine::InstructionLoad(uint32_t const &current_instruction){
+void VirtualMachine::InstructionLoad(uint32_t const &reg_dst, uint32_t const &literal){
   std::cout << "LOAD\n";
-  uint32_t reg_dst, literal;
-  DecodeLoad(current_instruction, reg_dst, literal);
   process_->execution_context_.registers_.registers[reg_dst] = literal;
 }
 
-void VirtualMachine::InstructionAdd (uint32_t const &current_instruction){
-  uint32_t reg_src1, reg_src2, reg_dst;
-  DecodeAdd(current_instruction, reg_src1, reg_src2, reg_dst);
+void VirtualMachine::InstructionAdd (uint32_t const &reg_src1, 
+  uint32_t const &reg_src2, uint32_t const &reg_dst){
   process_->execution_context_.registers_.registers[reg_dst] = 
       process_->execution_context_.registers_.registers[reg_src1]
     + process_->execution_context_.registers_.registers[reg_src2];

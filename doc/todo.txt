@@ -3,3 +3,4 @@
 - implement memory
 - implement stack
 - Set release/debug versions
+- is sub_type needed in mainloop¿
