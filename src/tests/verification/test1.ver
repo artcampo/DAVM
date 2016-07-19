@@ -1,1 +1,6 @@
-t1
+EXEC
+OP: LOAD
+OP: LOAD
+OP: ADD
+STOP
+Registers: 12, 15, 27, 0, 0

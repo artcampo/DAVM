@@ -99,6 +99,7 @@ void DecodeClass3(uint32_t const instruction, uint32_t &reg_src1
            & kRegistertMask;            
 }
 
+using namespace SubtypesArithmetic;
 
 uint32_t Load(uint32_t const &reg_dst, uint32_t const& literal){
   return CodeClass1(reg_dst, literal, IR_LOAD);

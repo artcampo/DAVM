@@ -24,8 +24,8 @@ bool VirtualMachine::ExecProcess(){
       uint32_t const current_op_code      = DecodeOpCode(current_class, current_type);
       uint32_t reg_src1, reg_src2, reg_dst, sub_type, literal, op_offset;
 
-      std::cout << "inst: " <<current_instruction 
-                << " op: " <<current_op_code <<"\n";
+//       std::cout << "inst: " <<current_instruction 
+//                 << " op: " <<current_op_code <<"\n";
       if (current_op_code == IR_STOP){
         std::cout << "STOP\n";
         executing = false;
@@ -38,8 +38,9 @@ bool VirtualMachine::ExecProcess(){
           ////////////////////////////////////////////////////////////
           case InstClassNoReg:
             switch(current_op_code){
-              default:      error_log_->errors.push_back(std::string("op not found (c0)")); 
-                            error = true;                          break;
+              default:      error_log_->errors.push_back(
+                                          std::string("op not found (c0)")); 
+                            error = true; break;
             }
             break;
             
@@ -47,33 +48,40 @@ bool VirtualMachine::ExecProcess(){
           case InstClassRegLit:
             DecodeClass1(current_instruction, reg_dst, literal);
             switch(current_op_code){
-              case IR_LOAD: InstructionLoad(reg_dst, literal);     break;
-              default:      error_log_->errors.push_back(std::string("op not found (c1)")); 
-                            error = true;                          break;
+              case IR_LOAD: InstLoad(reg_dst, literal); break;
+              default:      error_log_->errors.push_back(
+                                          std::string("op not found (c1)")); 
+                            error = true; break;
             }
             break;
             
           ////////////////////////////////////////////////////////////
           case InstClassRegLitSub:
             switch(current_op_code){
-              default:      error_log_->errors.push_back(std::string("op not found (c2)")); 
-                            error = true;                          break;
+              default:      error_log_->errors.push_back(
+                                          std::string("op not found (c2)")); 
+                            error = true; break;
             }
             break;
             
           ////////////////////////////////////////////////////////////
           case InstClassRegRegRegSub:
-            DecodeClass3(current_instruction, reg_src1, reg_src2, reg_dst, sub_type);
+            DecodeClass3(current_instruction, reg_src1, reg_src2, reg_dst, 
+                         sub_type);
             switch(current_op_code){
-              case IR_ADD:  InstructionAdd(reg_src1, reg_src2, reg_dst);   break;
-              default:      error_log_->errors.push_back(std::string("op not found (c3)")); 
-                            error = true;                          break;
+              case IR_ARI:  error = InstTypeArihmetic(reg_src1, reg_src2, 
+                                              reg_dst, sub_type); 
+                            break;
+              default:      error_log_->errors.push_back(
+                                          std::string("op not found (c3)")); 
+                            error = true; break;
             }
             break;
           
           ////////////////////////////////////////////////////////////
-          default:      error_log_->errors.push_back(std::string("class not found")); 
-                        error = true;                          break;
+          default:      error_log_->errors.push_back(
+                                          std::string("class not found")); 
+                        error = true; break;
         
         }
           
@@ -124,15 +132,29 @@ int VirtualMachine::LoadProcess(const std::string &file_name){
 using namespace IRCodification;
 using namespace IRBuilder;
   
-void VirtualMachine::InstructionLoad(uint32_t const &reg_dst, uint32_t const &literal){
+void VirtualMachine::InstLoad(uint32_t const &reg_dst, uint32_t const &literal){
   std::cout << "LOAD\n";
   process_->execution_context_.registers_.registers[reg_dst] = literal;
 }
 
-void VirtualMachine::InstructionAdd (uint32_t const &reg_src1, 
+void VirtualMachine::InstAdd (uint32_t const &reg_src1, 
   uint32_t const &reg_src2, uint32_t const &reg_dst){
+  std::cout << "ADD\n";
   process_->execution_context_.registers_.registers[reg_dst] = 
       process_->execution_context_.registers_.registers[reg_src1]
     + process_->execution_context_.registers_.registers[reg_src2];
+}
+
+bool VirtualMachine::InstTypeArihmetic (uint32_t const &reg_src1, 
+  uint32_t const &reg_src2, uint32_t const &reg_dst, uint32_t const &sub_type){
+  bool error = false;
+  using namespace SubtypesArithmetic;
+  switch(sub_type){
+    case IR_ADD:  InstAdd(reg_src1, reg_src2, reg_dst); break;
+    default:      error_log_->errors.push_back(
+                                std::string("ari :: subtype not found")); 
+                  error = true;                          break;
+  }
+  return error;
 }
   

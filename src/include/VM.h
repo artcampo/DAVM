@@ -26,8 +26,11 @@ private:
   ByteCode* ReadByteCode(const std::string &file_name);
   
 private:
-  void InstructionLoad(uint32_t const &reg_dst, uint32_t const &literal);
-  void InstructionAdd (uint32_t const &reg_src1, uint32_t const &reg_src2, 
+  void InstLoad(uint32_t const &reg_dst, uint32_t const &literal);
+  
+  bool InstTypeArihmetic(uint32_t const &reg_src1, uint32_t const &reg_src2, 
+                            uint32_t const &reg_dst, uint32_t const &sub_type);
+  void InstAdd (uint32_t const &reg_src1, uint32_t const &reg_src2, 
                        uint32_t const &reg_dst);
   
 };

@@ -57,11 +57,13 @@ enum IRCodf {
   IR_CMP   = InstClassRegRegRegSub + (1 << kClassNumberOfBits),
 };
 
+namespace SubtypesArithmetic{
 enum IRSubtypesArithmetic{
   IR_ADD = 0,
   IR_SUB = 1,
   IR_MUL = 2,
   IR_DIV = 3
+};
 };
 
 enum IRRegisters {
