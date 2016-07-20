@@ -1,6 +1,8 @@
 #include "VM.h"
 #include "ByteCode.h"
 #include "IRCodification.h"
+#include "IRBuilder.h"
+#include "IRDefinition.h"
 #include <iostream>
 
 int main(){
@@ -8,6 +10,7 @@ int main(){
   
   using namespace IRCodification;
   using namespace IRBuilder;
+  using namespace IRDefinition;
   bc->stream = std::vector<uint32_t> {
     Load( IR_REG0, 12),
     Load( IR_REG1, 15),   

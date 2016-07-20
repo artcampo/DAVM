@@ -6,6 +6,9 @@
 #include <string>
 #include <memory>
 
+namespace VirtualMachineSpecs{
+const static int kNumberRegisters = 10;  
+};
 
 class VirtualMachine{
 

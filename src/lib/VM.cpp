@@ -1,5 +1,7 @@
 #include "VM.h"
+#include "IRDefinition.h"
 #include "IRCodification.h"
+#include "IRBuilder.h"
 #include "RegisterBank.h"
 #include <stdint.h>
 #include <iostream>
@@ -17,6 +19,7 @@ bool VirtualMachine::ExecProcess(){
     }else{
       using namespace IRCodification;
       using namespace IRBuilder;
+      using namespace IRDefinition;
       
       uint32_t const current_instruction  = process_->GetCurrentOpCode();
       uint32_t const current_class        = DecodeClass(current_instruction);
@@ -148,6 +151,7 @@ void VirtualMachine::InstAdd (uint32_t const &reg_src1,
 bool VirtualMachine::InstTypeArihmetic (uint32_t const &reg_src1, 
   uint32_t const &reg_src2, uint32_t const &reg_dst, uint32_t const &sub_type){
   bool error = false;
+  using namespace IRDefinition;
   using namespace SubtypesArithmetic;
   switch(sub_type){
     case IR_ADD:  InstAdd(reg_src1, reg_src2, reg_dst); break;

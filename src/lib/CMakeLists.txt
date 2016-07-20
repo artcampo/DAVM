@@ -8,6 +8,8 @@ set(files
     RegisterBank.cpp
     VM.cpp
     IRCodification.cpp
+    IRBuilder.cpp
+    Utils.cpp
 )
 
 add_definitions( -std=c++11 -g)

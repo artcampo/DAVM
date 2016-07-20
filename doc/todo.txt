@@ -1,6 +1,7 @@
-- runtime type checking as policy
+- rename .h to .hpp
 - error log as policy
 - implement memory
 - implement stack
 - Set release/debug versions
 - is sub_type needed in mainloop¿
+- runtime type checking as policy
