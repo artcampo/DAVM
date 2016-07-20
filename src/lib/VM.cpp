@@ -27,8 +27,6 @@ bool VirtualMachine::ExecProcess(){
       uint32_t const current_op_code      = DecodeOpCode(current_class, current_type);
       uint32_t reg_src1, reg_src2, reg_dst, sub_type, literal, op_offset;
 
-//       std::cout << "inst: " <<current_instruction 
-//                 << " op: " <<current_op_code <<"\n";
       if (current_op_code == IR_STOP){
         std::cout << "STOP\n";
         executing = false;
