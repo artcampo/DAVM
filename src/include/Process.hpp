@@ -1,6 +1,6 @@
 #pragma once
-#include "ByteCode.h"
-#include "ExecutionContext.h"
+#include "ByteCode.hpp"
+#include "ExecutionContext.hpp"
 #include <memory>
 #include <stdint.h>
   

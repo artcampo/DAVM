@@ -1,6 +1,6 @@
 #include "Utils.hpp"
-#include "ByteCode.h"
-#include "IRBuilder.h"
+#include "ByteCode.hpp"
+#include "IRBuilder.hpp"
 #include <iostream>
 
 namespace VMUtils{

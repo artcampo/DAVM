@@ -1,7 +1,7 @@
 #pragma once
-#include "ByteCode.h"
-#include "Process.h"
-#include "ErrorLog.h"
+#include "ByteCode.hpp"
+#include "Process.hpp"
+#include "ErrorLog.hpp"
 
 #include <string>
 #include <memory>

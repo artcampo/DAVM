@@ -1,5 +1,5 @@
 #pragma once
-#include "IRCodification.h"
+#include "IRCodification.hpp"
 
 namespace IRBuilder{
   

@@ -1,4 +1,3 @@
-- rename .h to .hpp
 - error log as policy
 - implement memory
 - implement stack

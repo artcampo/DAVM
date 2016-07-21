@@ -1,4 +1,4 @@
-#include "Process.h"
+#include "Process.hpp"
 #include <iostream>
 
 void Process::NextOpCode(){

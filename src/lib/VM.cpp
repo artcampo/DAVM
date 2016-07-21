@@ -1,8 +1,8 @@
-#include "VM.h"
-#include "IRDefinition.h"
-#include "IRCodification.h"
-#include "IRBuilder.h"
-#include "RegisterBank.h"
+#include "VM.hpp"
+#include "IRDefinition.hpp"
+#include "IRCodification.hpp"
+#include "IRBuilder.hpp"
+#include "RegisterBank.hpp"
 #include <stdint.h>
 #include <iostream>
 

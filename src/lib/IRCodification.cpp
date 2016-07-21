@@ -1,5 +1,5 @@
-#include "IRCodification.h"
-#include "IRDefinition.h"
+#include "IRCodification.hpp"
+#include "IRDefinition.hpp"
 #include <iostream>
 
 namespace IRCodification{

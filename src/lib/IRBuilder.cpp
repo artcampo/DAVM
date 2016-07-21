@@ -1,6 +1,6 @@
-#include "IRBuilder.h"
-#include "IRDefinition.h"
-#include "IRCodification.h"
+#include "IRBuilder.hpp"
+#include "IRDefinition.hpp"
+#include "IRCodification.hpp"
 #include <string>
 #include <iostream>
 

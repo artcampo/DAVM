@@ -1,8 +1,8 @@
-#include "VM.h"
-#include "ByteCode.h"
-#include "IRCodification.h"
-#include "IRBuilder.h"
-#include "IRDefinition.h"
+#include "VM.hpp"
+#include "ByteCode.hpp"
+#include "IRCodification.hpp"
+#include "IRBuilder.hpp"
+#include "IRDefinition.hpp"
 #include <iostream>
 
 int main(){
