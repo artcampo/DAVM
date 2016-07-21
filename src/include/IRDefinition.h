@@ -40,6 +40,7 @@ enum InstClasses{
   InstClassRegRegRegSub = 3
 };
 
+// namespace OpCodes{
 enum IRCodf {
   IR_NOP   = InstClassNoReg + (0 << kClassNumberOfBits),
   IR_STOP  = InstClassNoReg + (1 << kClassNumberOfBits),
@@ -54,6 +55,7 @@ enum IRCodf {
   IR_ARI   = InstClassRegRegRegSub + (0 << kClassNumberOfBits),
   IR_CMP   = InstClassRegRegRegSub + (1 << kClassNumberOfBits),
 };
+// };
 
 namespace SubtypesArithmetic{
 enum IRSubtypesArithmetic{

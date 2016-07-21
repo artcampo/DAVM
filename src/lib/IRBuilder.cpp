@@ -60,8 +60,8 @@ uint32_t Stop(){
 // static const std::string opcodes[1][2] = { {"a","b"}};
 
 std::string PrintInstruction(uint32_t const &instruction){
-  uint32_t const current_class        = DecodeClass(instruction);
-  uint32_t const current_type         = DecodeType(instruction);  
+  uint32_t const current_class   = DecodeClass(instruction);
+  uint32_t const current_type    = DecodeType(instruction);  
   uint32_t const current_op_code = DecodeOpCode(current_class, current_type);
   uint32_t reg_src1, reg_src2, reg_dst, sub_type, literal, op_offset;
   std::string s;
@@ -89,9 +89,13 @@ std::string PrintInstruction(uint32_t const &instruction){
       s = string("Load, r:") + to_string(reg_dst) + string(" val: ") +
           to_string(literal); 
       break;
-    case IR_ADD: 
-      s = string("Load, rs1:") + to_string(reg_src1) + string(" rs2: ") +
-          to_string(reg_src1) + string(" rd:") + to_string(reg_dst); 
+    case IR_ARI: 
+      switch(sub_type){
+        case IR_ADD: s = string("ADD, rs1:"); break;
+        default:     s = string(" - ERROR in print decode -"); break;
+      }
+      s = s + to_string(reg_src1) + string(" rs2: ") +
+          to_string(reg_src2) + string(" rd:") + to_string(reg_dst); 
       break;      
     default: s = string(" - ERROR in print decode -"); break;
   };
