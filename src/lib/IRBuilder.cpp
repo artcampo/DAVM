@@ -66,7 +66,7 @@ std::string PrintInstruction(uint32_t const &instruction){
   uint32_t reg_src1, reg_src2, reg_dst, sub_type, literal, op_offset;
   std::string s;
   
-  std::cout << "Op: " << current_op_code <<"\n";
+//   std::cout << "Op: " << current_op_code <<"\n";
   //Decode operans
   switch(current_class){
     case InstClassNoReg: break;
