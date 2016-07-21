@@ -1,6 +1,8 @@
+- get tests from compiler itself
 - error log as policy
 - implement memory
 - implement stack
-- Set release/debug versions
-- is sub_type needed in mainloop¿
+
+Low priority:
 - runtime type checking as policy
+- Set release/debug versions

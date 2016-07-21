@@ -2,6 +2,10 @@
 #include "ByteCode.hpp"
 #include "IRBuilder.hpp"
 #include <iostream>
+#include <memory>
+#include <sstream>
+#include <iostream>
+#include <fstream>
 
 namespace VMUtils{
   
@@ -10,6 +14,41 @@ void print(ByteCode const &byte_code){
   for ( auto const inst : byte_code.stream){
     std::cout << PrintInstruction(inst) << "\n";
   }
+}
+
+void writeByteCode(ByteCode const &byte_code, std::string const &file_name){
+  std::unique_ptr<std::ofstream> outputFile( new std::ofstream() );
+  outputFile->open (file_name);
+  *outputFile << std::string("davm");    
+  *outputFile << byte_code.stream.size();
+  
+  for ( auto const inst : byte_code.stream){
+    *outputFile << inst;
+  }
+  
+  outputFile->close();
+}
+
+ByteCode* readByteCode(std::string const &file_name){
+  std::unique_ptr<std::ifstream> inputFile( new std::ifstream() );
+  inputFile->open (file_name);
+  
+  std::string s; *inputFile >> s;    
+  if(s != std::string("davm")){
+    std::cout << "Loading of ByteCode failed";
+    exit(1);
+  }
+  
+  int size; *inputFile >> size;    
+  ByteCode* byte_code = new ByteCode();
+  byte_code->stream.resize(size);
+  
+  for ( auto &inst : byte_code->stream){
+    *inputFile >> inst;
+  }
+  
+  inputFile->close();
+  return byte_code;
 }
 
 }; //end namespace VMUtils
