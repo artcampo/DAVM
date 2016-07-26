@@ -19,11 +19,11 @@ void print(ByteCode const &byte_code){
 void writeByteCode(ByteCode const &byte_code, std::string const &file_name){
   std::unique_ptr<std::ofstream> outputFile( new std::ofstream() );
   outputFile->open (file_name);
-  *outputFile << std::string("davm");    
+  *outputFile << std::string("davm") << "\n";    
   *outputFile << byte_code.stream.size();
   
   for ( auto const inst : byte_code.stream){
-    *outputFile << inst;
+    *outputFile << inst << "\n";
   }
   
   outputFile->close();
@@ -35,7 +35,8 @@ ByteCode* readByteCode(std::string const &file_name){
   
   std::string s; *inputFile >> s;    
   if(s != std::string("davm")){
-    std::cout << "Loading of ByteCode failed";
+    std::cout << "Loading of ByteCode failed: ";
+    std::cout << s;
     exit(1);
   }
   

@@ -9,4 +9,7 @@ target_link_libraries(test1 VM)
 add_executable(test2 test2.cpp)
 target_link_libraries(test2 VM)
 
-INSTALL(TARGETS test1 test2 DESTINATION tests)
+add_executable(davm main.cpp)
+target_link_libraries(davm VM)
+
+INSTALL(TARGETS test1 test2 davm DESTINATION tests)

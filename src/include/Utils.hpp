@@ -3,6 +3,8 @@
 class ByteCode;
 
 namespace VMUtils{
+  class ASTVisitorCodeGenerator;
+  
   void print(ByteCode const &byte_code);
   
   void      writeByteCode(ByteCode const &byte_code, 
