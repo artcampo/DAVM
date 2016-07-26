@@ -5,10 +5,10 @@ cp ../../../DACOMPILER/src/tests/verification/test1.bc.ver .
 cp ../../../DACOMPILER/src/tests/verification/test2.bc.ver .
 
 #copy tests from dacomp
-./davm test1.bc.ver > test.bc1.ver
+./davm test1.bc.ver > test_bc1.ver
 
 #test bc 2
-./davm test2.bc.ver > test.bc2.ver
+./davm test2.bc.ver > test_bc2.ver
 
 #test1
 ./test1 > test1.ver

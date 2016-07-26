@@ -6,12 +6,12 @@ cp ../../../DACOMPILER/src/tests/verification/test2.bc.ver .
 
 #test bc 1
 ./davm test1.bc.ver > test1.out
-diff test1.out test.bc1.ver
+diff test1.out test_bc1.ver
 rm test1.out 
 
 #test bc 2
 ./davm test2.bc.ver > test1.out
-diff test1.out test.bc2.ver
+diff test1.out test_bc2.ver
 rm test1.out 
 
 #test1
