@@ -39,7 +39,7 @@ bool checkIRCodification(){
 }
 
 
-using namespace SubtypesArithmetic;
+
 
 uint32_t Load(uint32_t const &reg_dst, uint32_t const& literal){
   return CodeClass1(reg_dst, literal, IR_LOAD);
@@ -50,7 +50,14 @@ uint32_t Arith(uint32_t const &reg_src1, uint32_t const &reg_src2,
   return CodeClass3(reg_src1, reg_src2, reg_dst, IR_ARI, op);
 }
 
+uint32_t Comp(uint32_t const &reg_src1, uint32_t const &reg_src2,
+               uint32_t const &reg_dst, uint32_t const &op){
+  return CodeClass3(reg_src1, reg_src2, reg_dst, IR_CMP, op);
+}
+
 namespace IRBuilderAPI{
+using namespace SubtypesArithmetic;
+
 uint32_t Add(uint32_t const &reg_src1, uint32_t const &reg_src2,
              uint32_t const &reg_dst){
   return CodeClass3(reg_src1, reg_src2, reg_dst, IR_ARI, IR_ADD);
@@ -110,7 +117,7 @@ std::string PrintInstruction(uint32_t const &instruction){
           to_string(literal); 
       break;
     case IR_ARI: 
-//       std::cout << "OP "<<sub_type<<"\n";
+      using namespace SubtypesArithmetic;
       switch(sub_type){
         case IR_ADD: s = string("ADD, rs1:"); break;
         case IR_SUB: s = string("SUB, rs1:"); break;
@@ -120,7 +127,19 @@ std::string PrintInstruction(uint32_t const &instruction){
       }
       s = s + to_string(reg_src1) + string(" rs2: ") +
           to_string(reg_src2) + string(" rd:") + to_string(reg_dst); 
-      break;      
+      break;//case IR_ARI     
+    case IR_CMP: 
+      using namespace SubtypesComparison;
+      switch(sub_type){
+        case IR_NOT: s = string("NOT, rs1:"); break;
+        case IR_EQL: s = string("EQL, rs1:"); break;
+        case IR_LST: s = string("LST, rs1:"); break;
+        case IR_LTE: s = string("LTE, rs1:"); break;
+        default:     s = string(" - ERROR in print decode -"); break;
+      }
+      s = s + to_string(reg_src1) + string(" rs2: ") +
+          to_string(reg_src2) + string(" rd:") + to_string(reg_dst); 
+      break;//case IR_CMP    
     default: s = string(" - ERROR in print decode -"); break;
   };
   

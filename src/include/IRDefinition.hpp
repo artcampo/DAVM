@@ -57,6 +57,15 @@ enum IRSubtypesArithmetic{
 };
 };
 
+namespace SubtypesComparison{
+enum IRSubtypesComparison{
+  IR_NOT = 0,   // !
+  IR_EQL = 1,   // ==
+  IR_LST = 2,   // <
+  IR_LTE = 3,   // <=    
+};
+};
+
 enum IRRegisters {
   IR_REG0  = 0,
   IR_REG1  = 1,

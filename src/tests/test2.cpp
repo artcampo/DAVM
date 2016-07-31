@@ -13,6 +13,7 @@ int main(){
   using namespace IRBuilder;
   using namespace IRDefinition;
   using namespace IRBuilderAPI;
+  using namespace SubtypesComparison;
   
   bc->stream = std::vector<uint32_t> {
     Load( IR_REG5, 42),
@@ -20,6 +21,10 @@ int main(){
     Sub ( IR_REG0, IR_REG1, IR_REG2),
     Mul ( IR_REG0, IR_REG1, IR_REG2),
     Div ( IR_REG0, IR_REG1, IR_REG2),
+    Comp( IR_REG0, IR_REG1, IR_REG2, IR_NOT),
+    Comp( IR_REG0, IR_REG1, IR_REG2, IR_EQL),
+    Comp( IR_REG0, IR_REG1, IR_REG2, IR_LST),
+    Comp( IR_REG0, IR_REG1, IR_REG2, IR_LTE),
     Stop()
   };
   
