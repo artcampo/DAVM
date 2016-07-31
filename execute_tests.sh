@@ -1,6 +1,7 @@
 cd install/tests
 
 test_from_dacomp(){
+  echo "Test from compiler: $1"
   cp ../../../DACOMPILER/src/tests/verification/$1.bc.ver .
   ./davm $1.bc.ver > $1.out
   diff $1.out $1.bc.out.ver
