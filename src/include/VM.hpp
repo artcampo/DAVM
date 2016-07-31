@@ -33,7 +33,13 @@ private:
   
   bool InstTypeArihmetic(uint32_t const &reg_src1, uint32_t const &reg_src2, 
                             uint32_t const &reg_dst, uint32_t const &sub_type);
+  
   void InstAdd (uint32_t const &reg_src1, uint32_t const &reg_src2, 
                        uint32_t const &reg_dst);
-  
+  void InstSub (uint32_t const &reg_src1, uint32_t const &reg_src2, 
+                       uint32_t const &reg_dst);
+  void InstMul (uint32_t const &reg_src1, uint32_t const &reg_src2, 
+                       uint32_t const &reg_dst);
+  void InstDiv (uint32_t const &reg_src1, uint32_t const &reg_src2, 
+                       uint32_t const &reg_dst);  
 };

@@ -1,17 +1,19 @@
 cd install/tests
 
-#copy tests from dacomp
-cp ../../../DACOMPILER/src/tests/verification/test1.bc.ver .
-cp ../../../DACOMPILER/src/tests/verification/test2.bc.ver .
+regenerate_test_from_dacomp(){
+  cp ../../../DACOMPILER/src/tests/verification/$1.bc.ver .
+  ./davm $1.bc.ver > $1.bc.out.ver
+}
 
-#copy tests from dacomp
-./davm test1.bc.ver > test_bc1.ver
+regenerate_test_from_dacomp test1
+regenerate_test_from_dacomp test2
+regenerate_test_from_dacomp test3
 
-#test bc 2
-./davm test2.bc.ver > test_bc2.ver
+regenerate_test_standalone(){
+  ./$1 > $1.ver
+}
 
-#test1
-./test1 > test1.ver
+regenerate_test_standalone test1
 
-#test2
-./test2 > test2.ver
+#end
+echo "Tests regenerated. You need to reinstall before running tests again."

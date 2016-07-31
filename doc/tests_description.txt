@@ -1,0 +1,13 @@
+Tests for DAVM are of two kinds:
+1) standalone executables, using internal API for inst building
+2) compiler tests, produced by the compiler
+
+------------------------------------------------------------------------------
+
+standalone tests
+test1, ADD of two inmediates using LOAD. Program uses STOP as well.
+
+------------------------------------------------------------------------------
+compiler tests
+
+Directly copied from DACOMP folder.

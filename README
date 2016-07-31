@@ -1,0 +1,8 @@
+DAVM, simple Virtual Machine (VM) for educative pourposes. 
+Register based.
+
+Assumes DACOMP is installed in the parent directory.
+
+Developed by:
+- Arturo San Emeterio Campos (arturocampos82@gmail.com)
+- Daniel Peyrolón 

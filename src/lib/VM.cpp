@@ -128,35 +128,3 @@ void VirtualMachine::DumpExecutionContext(int const registers_num) const{
 int VirtualMachine::LoadProcess(const std::string &file_name){
   std::unique_ptr<ByteCode> byte_code(ReadByteCode(file_name)); 
 }
-
-// #include "VM_instructions_implementation.cpp"
-using namespace IRCodification;
-using namespace IRBuilder;
-  
-void VirtualMachine::InstLoad(uint32_t const &reg_dst, uint32_t const &literal){
-  std::cout << "LOAD\n";
-  process_->execution_context_.registers_.registers[reg_dst] = literal;
-}
-
-void VirtualMachine::InstAdd (uint32_t const &reg_src1, 
-  uint32_t const &reg_src2, uint32_t const &reg_dst){
-  std::cout << "ADD\n";
-  process_->execution_context_.registers_.registers[reg_dst] = 
-      process_->execution_context_.registers_.registers[reg_src1]
-    + process_->execution_context_.registers_.registers[reg_src2];
-}
-
-bool VirtualMachine::InstTypeArihmetic (uint32_t const &reg_src1, 
-  uint32_t const &reg_src2, uint32_t const &reg_dst, uint32_t const &sub_type){
-  bool error = false;
-  using namespace IRDefinition;
-  using namespace SubtypesArithmetic;
-  switch(sub_type){
-    case IR_ADD:  InstAdd(reg_src1, reg_src2, reg_dst); break;
-    default:      error_log_->errors.push_back(
-                                std::string("ari :: subtype not found")); 
-                  error = true;                          break;
-  }
-  return error;
-}
-  

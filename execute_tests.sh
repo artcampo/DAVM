@@ -1,26 +1,21 @@
 cd install/tests
 
-#copy tests from dacomp
-cp ../../../DACOMPILER/src/tests/verification/test1.bc.ver .
-cp ../../../DACOMPILER/src/tests/verification/test2.bc.ver .
-cp ../../../DACOMPILER/src/tests/verification/test3.bc.ver .
+test_from_dacomp(){
+  cp ../../../DACOMPILER/src/tests/verification/$1.bc.ver .
+  ./davm $1.bc.ver > $1.out
+  diff $1.out $1.bc.out.ver
+  rm $1.out 
+}
 
-#test bc 1
-./davm test1.bc.ver > test1.out
-diff test1.out test_bc1.ver
-rm test1.out 
+test_from_dacomp test1
+test_from_dacomp test2
+test_from_dacomp test3
 
-#test bc 2
-./davm test2.bc.ver > test1.out
-diff test1.out test_bc2.ver
-rm test1.out 
+test_standalone(){
+    echo "Test: $1"
+    ./$1 > $1.out
+    diff $1.out $1.ver
+    rm $1.out 
+}
 
-#test1
-./test1 > test1.out
-diff test1.out test1.ver
-rm test1.out 
-
-#test2
-./test2 > test2.out
-diff test2.out test2.ver
-rm test2.out
+test_standalone test1
