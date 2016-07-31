@@ -5,6 +5,7 @@ regenerate_test_from_dacomp(){
   cp ../../../DACOMPILER/src/tests/verification/$1.bc.ver \
      ../../src/tests/verification/.
   ./davm $1.bc.ver > $1.bc.out.ver
+  cp $1.bc.out.ver ../../src/tests/verification/.
 }
 
 regenerate_test_from_dacomp test1

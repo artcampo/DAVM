@@ -17,7 +17,7 @@ public:
   VirtualMachine(ByteCode const &byte_code);
   
   bool    ExecProcess();
-  void    DumpExecutionContext(int const registers_num = 5) const;
+  void    DumpExecutionContext(int const registers_num = 10) const;
 
 private:  
   int     LoadProcess(const std::string &file_name);

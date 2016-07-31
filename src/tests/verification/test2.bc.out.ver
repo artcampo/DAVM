@@ -1,0 +1,10 @@
+EXEC
+OP: LOAD
+OP: ADD
+OP: LOAD
+OP: LOAD
+OP: ADD
+OP: LOAD
+OP: ADD
+STOP
+Registers: 0, 1, 1, 2, 3, 5, 5, 10, 0, 0
