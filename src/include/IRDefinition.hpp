@@ -82,5 +82,5 @@ enum IRRegisters {
 };
   
 
-}; //namespace IRCodification
+}; //namespace IRDefinition
 

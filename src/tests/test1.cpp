@@ -11,6 +11,7 @@ int main(){
   using namespace IRCodification;
   using namespace IRBuilder;
   using namespace IRDefinition;
+  using namespace IRBuilderAPI;
   bc->stream = std::vector<uint32_t> {
     Load( IR_REG0, 12),
     Load( IR_REG1, 15),   

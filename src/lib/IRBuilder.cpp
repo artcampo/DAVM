@@ -45,6 +45,12 @@ uint32_t Load(uint32_t const &reg_dst, uint32_t const& literal){
   return CodeClass1(reg_dst, literal, IR_LOAD);
 }
 
+uint32_t Arith(uint32_t const &reg_src1, uint32_t const &reg_src2,
+               uint32_t const &reg_dst, uint32_t const &op){
+  return CodeClass3(reg_src1, reg_src2, reg_dst, IR_ARI, op);
+}
+
+namespace IRBuilderAPI{
 uint32_t Add(uint32_t const &reg_src1, uint32_t const &reg_src2,
              uint32_t const &reg_dst){
   return CodeClass3(reg_src1, reg_src2, reg_dst, IR_ARI, IR_ADD);
@@ -65,6 +71,7 @@ uint32_t Div(uint32_t const &reg_src1, uint32_t const &reg_src2,
              uint32_t const &reg_dst){
   return CodeClass3(reg_src1, reg_src2, reg_dst, IR_ARI, IR_DIV);             
 }
+}; //namespace IRBuilderAPI
 
 uint32_t Stop(){
   return IR_STOP;
