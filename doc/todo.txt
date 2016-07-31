@@ -1,4 +1,5 @@
 - reduce comparisons to minimum set that allows all comp in one VM-inst
+- use git modules
 - what to do with div0? exceptions?
 - error log as policy
 - implement memory
