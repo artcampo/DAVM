@@ -10,7 +10,7 @@ using namespace IRCodification;
 using namespace IRBuilder;
   
 void VirtualMachine::InstLoad(uint32_t const &reg_dst, uint32_t const &literal){
-  std::cout << "LOAD\n";
+  std::cout << "LOAD R"<< reg_dst <<"="<<literal<<"\n";
   process_->execution_context_.registers_.registers[reg_dst] = literal;
 }
 
@@ -30,7 +30,7 @@ bool VirtualMachine::InstTypeArihmetic (uint32_t const &reg_src1,
   
 void VirtualMachine::InstAdd (uint32_t const &reg_src1, 
   uint32_t const &reg_src2, uint32_t const &reg_dst){
-  std::cout << "ADD\n";
+  std::cout << "ADD R"<<reg_dst<<"=R"<<reg_src1<<" op R"<< reg_src2 <<"\n";
   process_->execution_context_.registers_.registers[reg_dst] = 
       process_->execution_context_.registers_.registers[reg_src1]
     + process_->execution_context_.registers_.registers[reg_src2];
@@ -38,7 +38,7 @@ void VirtualMachine::InstAdd (uint32_t const &reg_src1,
 
 void VirtualMachine::InstSub (uint32_t const &reg_src1, 
   uint32_t const &reg_src2, uint32_t const &reg_dst){
-  std::cout << "SUB\n";
+  std::cout << "SUB R"<<reg_dst<<"=R"<<reg_src1<<" op R"<< reg_src2 <<"\n";
   process_->execution_context_.registers_.registers[reg_dst] = 
       process_->execution_context_.registers_.registers[reg_src1]
     - process_->execution_context_.registers_.registers[reg_src2];
@@ -46,7 +46,7 @@ void VirtualMachine::InstSub (uint32_t const &reg_src1,
 
 void VirtualMachine::InstMul (uint32_t const &reg_src1, 
   uint32_t const &reg_src2, uint32_t const &reg_dst){
-  std::cout << "MUL\n";
+  std::cout << "MUL R"<<reg_dst<<"=R"<<reg_src1<<" op R"<< reg_src2 <<"\n";
   process_->execution_context_.registers_.registers[reg_dst] = 
       process_->execution_context_.registers_.registers[reg_src1]
     * process_->execution_context_.registers_.registers[reg_src2];
@@ -54,7 +54,7 @@ void VirtualMachine::InstMul (uint32_t const &reg_src1,
 
 void VirtualMachine::InstDiv (uint32_t const &reg_src1, 
   uint32_t const &reg_src2, uint32_t const &reg_dst){
-  std::cout << "DIV\n";
+  std::cout << "DIV R"<<reg_dst<<"=R"<<reg_src1<<" op R"<< reg_src2 <<"\n";
   process_->execution_context_.registers_.registers[reg_dst] = 
       process_->execution_context_.registers_.registers[reg_src1]
     / process_->execution_context_.registers_.registers[reg_src2];
