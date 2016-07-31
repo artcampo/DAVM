@@ -5,7 +5,9 @@ INSTALL(FILES test1.ver
               test1.bc.ver 
               test2.bc.ver 
               test3.bc.ver 
+              test4.bc.ver 
               test1.bc.out.ver
               test2.bc.out.ver
               test3.bc.out.ver
+              test4.bc.out.ver
         DESTINATION tests)

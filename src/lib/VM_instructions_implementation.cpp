@@ -21,6 +21,9 @@ bool VirtualMachine::InstTypeArihmetic (uint32_t const &reg_src1,
   using namespace SubtypesArithmetic;
   switch(sub_type){
     case IR_ADD:  InstAdd(reg_src1, reg_src2, reg_dst); break;
+    case IR_SUB:  InstSub(reg_src1, reg_src2, reg_dst); break;
+    case IR_MUL:  InstMul(reg_src1, reg_src2, reg_dst); break;
+    case IR_DIV:  InstDiv(reg_src1, reg_src2, reg_dst); break;
     default:      error_log_->errors.push_back(
                                 std::string("ari :: subtype not found")); 
                   error = true;                          break;
