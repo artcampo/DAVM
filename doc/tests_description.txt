@@ -5,7 +5,13 @@ Tests for DAVM are of two kinds:
 ------------------------------------------------------------------------------
 
 standalone tests
-test1, ADD of two inmediates using LOAD. Program uses STOP as well.
+-test1, ADD of two inmediates using LOAD. Program uses STOP as well.
+-test2, test codification/decodification of all supported instructions
+
+Adding a new test involves:
+1) Create testX.cpp in /src/tests
+2) Run: clean_install, regenerate_tests
+3) Inspect test result
 
 ------------------------------------------------------------------------------
 compiler tests

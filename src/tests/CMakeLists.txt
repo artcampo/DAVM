@@ -6,10 +6,14 @@ add_definitions( -std=c++11 -g)
 add_executable(test1 test1.cpp)
 target_link_libraries(test1 VM)
 
+add_executable(test2 test2.cpp)
+target_link_libraries(test2 VM)
+
 add_executable(davm main.cpp)
 target_link_libraries(davm VM)
 
 INSTALL(TARGETS 
         test1 
+        test2
         davm 
         DESTINATION tests)

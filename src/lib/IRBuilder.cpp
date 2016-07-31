@@ -110,6 +110,7 @@ std::string PrintInstruction(uint32_t const &instruction){
           to_string(literal); 
       break;
     case IR_ARI: 
+//       std::cout << "OP "<<sub_type<<"\n";
       switch(sub_type){
         case IR_ADD: s = string("ADD, rs1:"); break;
         case IR_SUB: s = string("SUB, rs1:"); break;

@@ -1,0 +1,6 @@
+Load, r:5 val: 42
+ADD, rs1:0 rs2: 1 rd:2
+ADD, rs1:0 rs2: 1 rd:2
+MUL, rs1:0 rs2: 1 rd:2
+MUL, rs1:0 rs2: 1 rd:2
+Stop

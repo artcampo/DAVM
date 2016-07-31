@@ -24,7 +24,6 @@ uint32_t Mul(uint32_t const &reg_src1, uint32_t const &reg_src2,
 uint32_t Div(uint32_t const &reg_src1, uint32_t const &reg_src2,
              uint32_t const &reg_dst);
 
-  
 }; //namespace IRBuilderAPI
 
 }; //namespace IRBuilder

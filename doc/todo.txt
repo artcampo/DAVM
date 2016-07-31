@@ -5,5 +5,6 @@
 - implement stack
 
 Low priority:
+- split standalone/compiler tests
 - runtime type checking as policy
 - Set release/debug versions

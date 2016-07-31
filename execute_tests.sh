@@ -19,3 +19,4 @@ test_standalone(){
 }
 
 test_standalone test1
+test_standalone test2
