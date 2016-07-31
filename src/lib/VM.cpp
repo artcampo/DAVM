@@ -23,7 +23,7 @@ bool VirtualMachine::ExecProcess(){
       
       uint32_t const current_instruction  = process_->GetCurrentOpCode();
       uint32_t const current_class        = DecodeClass(current_instruction);
-      uint32_t const current_type         = DecodeType(current_instruction);
+      uint32_t const current_type         = DecodeType(current_instruction, current_class);
       uint32_t const current_op_code      = DecodeOpCode(current_class, current_type);
       uint32_t reg_src1, reg_src2, reg_dst, sub_type, literal, op_offset;
 

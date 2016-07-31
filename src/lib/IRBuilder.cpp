@@ -81,7 +81,7 @@ uint32_t Stop(){
 
 std::string PrintInstruction(uint32_t const &instruction){
   uint32_t const current_class   = DecodeClass(instruction);
-  uint32_t const current_type    = DecodeType(instruction);  
+  uint32_t const current_type    = DecodeType(instruction, current_class);  
   uint32_t const current_op_code = DecodeOpCode(current_class, current_type);
   uint32_t reg_src1, reg_src2, reg_dst, sub_type, literal, op_offset;
   std::string s;
@@ -89,7 +89,7 @@ std::string PrintInstruction(uint32_t const &instruction){
 //   std::cout << "Op: " << current_op_code <<"\n";
   //Decode operans
   switch(current_class){
-    case InstClassNoReg: break;
+    case InstClassNoReg:  break;
     case InstClassRegLit: DecodeClass1(instruction, reg_dst, literal);  break;
     case InstClassRegLitSub: break;
     case InstClassRegRegRegSub:

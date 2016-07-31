@@ -11,14 +11,14 @@ uint32_t  DecodeClass (uint32_t const &instruction){
 }
 
 
-uint32_t  DecodeType (uint32_t const &instruction){
-  if( DecodeClass(instruction) == InstClassNoReg )
+uint32_t  DecodeType (uint32_t const &instruction, uint32_t const &inst_class){
+  if( inst_class == InstClassNoReg )
     return (instruction >> kClassNumberOfBits) & kClass0BitMask;
-  else if( DecodeClass(instruction) == InstClassRegLit )
+  else if( inst_class == InstClassRegLit )
     return (instruction >> kClassNumberOfBits) & kClass1BitMask;
-  else if( DecodeClass(instruction) == InstClassRegLitSub )
+  else if( inst_class == InstClassRegLitSub )
     return (instruction >> kClassNumberOfBits) & kClass2BitMask;
- else //if( DecodeClass(instruction) == InstClassRegRegRegSub )
+ else //if( inst_class == InstClassRegRegRegSub )
     return (instruction >> kClassNumberOfBits) & kClass3BitMask;
 }
 
@@ -57,15 +57,15 @@ void DecodeClass1(uint32_t const instruction, uint32_t &reg_dst,
 void DecodeClass3(uint32_t const instruction, uint32_t &reg_src1
                  ,uint32_t &reg_src2, uint32_t &reg_dst, uint32_t &subtype){
   
-  subtype  = (instruction >> (kClass3NumberOfBits + kClassNumberOfBits)) 
-           & kSubtypeNumberOfBits;
-  reg_src1 = (instruction >> (kClass3NumberOfBits + kClassNumberOfBits 
+  subtype  = (instruction >> (kClass3OpcodeNumberOfBits)) 
+           & kSubtypeMask;
+  reg_src1 = (instruction >> (kClass3OpcodeNumberOfBits 
                               + kSubtypeNumberOfBits)) 
            & kRegistertMask;
-  reg_src2 = (instruction >> (kClass3NumberOfBits + kClassNumberOfBits 
+  reg_src2 = (instruction >> (kClass3OpcodeNumberOfBits 
                               + kSubtypeNumberOfBits + kRegisterNumberOfBits)) 
            & kRegistertMask;
-  reg_dst  = (instruction >> (kClass3NumberOfBits + kClassNumberOfBits 
+  reg_dst  = (instruction >> (kClass3OpcodeNumberOfBits 
                               + kSubtypeNumberOfBits + kRegisterNumberOfBits*2))
            & kRegistertMask;            
 }

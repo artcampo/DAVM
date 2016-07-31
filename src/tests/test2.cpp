@@ -29,6 +29,7 @@ int main(){
     return 1;
   }
   
+  VMUtils::printRaw(*bc);
   VMUtils::print(*bc);
 //   std::cout << "test1 - started" << std::endl;
 //   for(auto it : bc->stream)
