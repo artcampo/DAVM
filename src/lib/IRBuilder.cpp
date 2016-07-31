@@ -45,11 +45,14 @@ uint32_t Load(uint32_t const &reg_dst, uint32_t const& literal){
   return CodeClass1(reg_dst, literal, IR_LOAD);
 }
 
-uint32_t Add(uint32_t const &reg_src1, 
-             uint32_t const &reg_src2,
-             uint32_t const &reg_dst
-            ){
+uint32_t Add(uint32_t const &reg_src1, uint32_t const &reg_src2,
+             uint32_t const &reg_dst){
   return CodeClass3(reg_src1, reg_src2, reg_dst, IR_ARI, IR_ADD);
+}
+
+uint32_t Mul(uint32_t const &reg_src1, uint32_t const &reg_src2,
+             uint32_t const &reg_dst){
+  return CodeClass3(reg_src1, reg_src2, reg_dst, IR_ARI, IR_MUL);             
 }
 
 
@@ -92,6 +95,7 @@ std::string PrintInstruction(uint32_t const &instruction){
     case IR_ARI: 
       switch(sub_type){
         case IR_ADD: s = string("ADD, rs1:"); break;
+        case IR_MUL: s = string("MUL, rs1:"); break;
         default:     s = string(" - ERROR in print decode -"); break;
       }
       s = s + to_string(reg_src1) + string(" rs2: ") +

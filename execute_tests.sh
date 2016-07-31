@@ -3,6 +3,7 @@ cd install/tests
 #copy tests from dacomp
 cp ../../../DACOMPILER/src/tests/verification/test1.bc.ver .
 cp ../../../DACOMPILER/src/tests/verification/test2.bc.ver .
+cp ../../../DACOMPILER/src/tests/verification/test3.bc.ver .
 
 #test bc 1
 ./davm test1.bc.ver > test1.out
