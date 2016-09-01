@@ -73,6 +73,9 @@ bool VirtualMachine::ExecProcess(){
               case IR_ARI:  error = InstTypeArihmetic(reg_src1, reg_src2, 
                                               reg_dst, sub_type); 
                             break;
+              case IR_CMP:  error = InstTypeComparison(reg_src1, reg_src2, 
+                                              reg_dst, sub_type); 
+                            break;                            
               default:      error_log_->errors.push_back(
                                           std::string("op not found (c3)")); 
                             error = true; break;

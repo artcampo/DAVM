@@ -14,6 +14,8 @@ void VirtualMachine::InstLoad(uint32_t const &reg_dst, uint32_t const &literal){
   process_->execution_context_.registers_.registers[reg_dst] = literal;
 }
 
+/////////////////////////////////////////////////////////////////////////////
+//  Class 3: type ARI
 bool VirtualMachine::InstTypeArihmetic (uint32_t const &reg_src1, 
   uint32_t const &reg_src2, uint32_t const &reg_dst, uint32_t const &sub_type){
   bool error = false;
@@ -61,4 +63,56 @@ void VirtualMachine::InstDiv (uint32_t const &reg_src1,
   process_->execution_context_.registers_.registers[reg_dst] = 
       process_->execution_context_.registers_.registers[reg_src1]
     / process_->execution_context_.registers_.registers[reg_src2];
+}  
+
+
+
+/////////////////////////////////////////////////////////////////////////////
+//  Class 3: type CMP
+bool VirtualMachine::InstTypeComparison (uint32_t const &reg_src1, 
+  uint32_t const &reg_src2, uint32_t const &reg_dst, uint32_t const &sub_type){
+  bool error = false;
+  using namespace IRDefinition;
+  using namespace SubtypesComparison;
+  switch(sub_type){
+    case IR_NOT:  InstNot(reg_src1, reg_src2, reg_dst); break;
+    case IR_EQL:  InstEql(reg_src1, reg_src2, reg_dst); break;
+    case IR_LST:  InstLst(reg_src1, reg_src2, reg_dst); break;
+    case IR_LTE:  InstLte(reg_src1, reg_src2, reg_dst); break;
+    default:      error_log_->errors.push_back(
+                                std::string("ari :: subtype not found")); 
+                  error = true;                          break;
+  }
+  return error;
+}
+  
+void VirtualMachine::InstNot (uint32_t const &reg_src1, 
+  uint32_t const &reg_src2, uint32_t const &reg_dst){
+  std::cout << "NOT R"<<reg_dst<<"= !R"<<reg_src1<<"\n";
+  process_->execution_context_.registers_.registers[reg_dst] = 
+      not process_->execution_context_.registers_.registers[reg_src1];
+}  
+
+void VirtualMachine::InstEql (uint32_t const &reg_src1, 
+  uint32_t const &reg_src2, uint32_t const &reg_dst){
+  std::cout << "EQL R"<<reg_dst<<"=R"<<reg_src1<<" == R"<< reg_src2 <<"\n";
+  process_->execution_context_.registers_.registers[reg_dst] = 
+      process_->execution_context_.registers_.registers[reg_src1]
+   == process_->execution_context_.registers_.registers[reg_src2];
+}  
+
+void VirtualMachine::InstLst (uint32_t const &reg_src1, 
+  uint32_t const &reg_src2, uint32_t const &reg_dst){
+  std::cout << "LST R"<<reg_dst<<"=R"<<reg_src1<<" < R"<< reg_src2 <<"\n";
+  process_->execution_context_.registers_.registers[reg_dst] = 
+      process_->execution_context_.registers_.registers[reg_src1]
+    < process_->execution_context_.registers_.registers[reg_src2];
+}  
+
+void VirtualMachine::InstLte (uint32_t const &reg_src1, 
+  uint32_t const &reg_src2, uint32_t const &reg_dst){
+  std::cout << "LTE R"<<reg_dst<<"=R"<<reg_src1<<" <= R"<< reg_src2 <<"\n";
+  process_->execution_context_.registers_.registers[reg_dst] = 
+      process_->execution_context_.registers_.registers[reg_src1]
+   <= process_->execution_context_.registers_.registers[reg_src2];
 }  

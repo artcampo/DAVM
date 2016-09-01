@@ -31,6 +31,7 @@ private:
 private:
   void InstLoad(uint32_t const &reg_dst, uint32_t const &literal);
   
+  //Class 3: Type Ari
   bool InstTypeArihmetic(uint32_t const &reg_src1, uint32_t const &reg_src2, 
                             uint32_t const &reg_dst, uint32_t const &sub_type);
   
@@ -42,4 +43,21 @@ private:
                        uint32_t const &reg_dst);
   void InstDiv (uint32_t const &reg_src1, uint32_t const &reg_src2, 
                        uint32_t const &reg_dst);  
+
+  //Class 3: Type Cmp
+
+  bool InstTypeComparison(uint32_t const &reg_src1, uint32_t const &reg_src2, 
+                            uint32_t const &reg_dst, uint32_t const &sub_type);
+ 
+  void InstNot (uint32_t const &reg_src1, uint32_t const &reg_src2, 
+                       uint32_t const &reg_dst);
+  void InstEql (uint32_t const &reg_src1, uint32_t const &reg_src2, 
+                       uint32_t const &reg_dst);
+  void InstLst (uint32_t const &reg_src1, uint32_t const &reg_src2, 
+                       uint32_t const &reg_dst);
+  void InstLte (uint32_t const &reg_src1, uint32_t const &reg_src2, 
+                       uint32_t const &reg_dst);  
+  
+  
+  
 };
