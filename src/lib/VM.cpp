@@ -96,6 +96,8 @@ bool VirtualMachine::ExecProcess(){
           process_->ModifyIP(op_offset);
       }// end of if (current_op_code == IR_STOP){
       
+      //Dump registers after every instruction
+//       DumpExecutionContext();
     }
   }
   
