@@ -1,25 +1,23 @@
+#!/bin/sh
+
 cd install/tests
 
-#copy tests from dacomp
-cp ../../../DACOMPILER/src/tests/verification/test1.bc.ver .
-cp ../../../DACOMPILER/src/tests/verification/test2.bc.ver .
+executetest() {
+    cp ../../../DACOMPILER/src/tests/verification/test$1.bc.ver .
+    # Test bytecode
+    ./davm test$1.bc.ver > test$1.out
+    diff test$1.out test_bc$1.ver
+    rm test$1.out 
+    # Test correctness of executable
+    ./test$1 > test$1.out
+    diff test$1.out test$1.ver
+    rm test$1.out 
+}
 
-#test bc 1
-./davm test1.bc.ver > test1.out
-diff test1.out test_bc1.ver
-rm test1.out 
+for i in `seq 1 2`
+do
+    executetest $i
+done
 
-#test bc 2
-./davm test2.bc.ver > test1.out
-diff test1.out test_bc2.ver
-rm test1.out 
+echo "Done testing"
 
-#test1
-./test1 > test1.out
-diff test1.out test1.ver
-rm test1.out 
-
-#test2
-./test2 > test2.out
-diff test2.out test2.ver
-rm test2.out
