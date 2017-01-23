@@ -5,7 +5,7 @@
 namespace IRCodification{
   
 uint32_t  DecodeClass (uint32_t const &instruction);
-uint32_t  DecodeType  (uint32_t const &instruction);
+uint32_t  DecodeType  (uint32_t const &instruction, uint32_t const &inst_class);
 uint32_t  DecodeOpCode(uint32_t const &inst_class, uint32_t const &inst_type);
 
 uint32_t CodeClass1(uint32_t const &reg_dst, uint32_t const& literal,

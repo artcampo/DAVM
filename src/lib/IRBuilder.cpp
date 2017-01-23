@@ -39,19 +39,46 @@ bool checkIRCodification(){
 }
 
 
-using namespace SubtypesArithmetic;
+
 
 uint32_t Load(uint32_t const &reg_dst, uint32_t const& literal){
   return CodeClass1(reg_dst, literal, IR_LOAD);
 }
 
-uint32_t Add(uint32_t const &reg_src1, 
-             uint32_t const &reg_src2,
-             uint32_t const &reg_dst
-            ){
+uint32_t Arith(uint32_t const &reg_src1, uint32_t const &reg_src2,
+               uint32_t const &reg_dst, uint32_t const &op){
+  return CodeClass3(reg_src1, reg_src2, reg_dst, IR_ARI, op);
+}
+
+uint32_t Comp(uint32_t const &reg_src1, uint32_t const &reg_src2,
+               uint32_t const &reg_dst, uint32_t const &op){
+  return CodeClass3(reg_src1, reg_src2, reg_dst, IR_CMP, op);
+}
+
+namespace IRBuilderAPI{
+using namespace SubtypesArithmetic;
+
+uint32_t Add(uint32_t const &reg_src1, uint32_t const &reg_src2,
+             uint32_t const &reg_dst){
   return CodeClass3(reg_src1, reg_src2, reg_dst, IR_ARI, IR_ADD);
 }
 
+uint32_t Sub(uint32_t const &reg_src1, uint32_t const &reg_src2,
+             uint32_t const &reg_dst){
+  return CodeClass3(reg_src1, reg_src2, reg_dst, IR_ARI, IR_SUB);
+}
+
+uint32_t Mul(uint32_t const &reg_src1, uint32_t const &reg_src2,
+             uint32_t const &reg_dst){
+  return CodeClass3(reg_src1, reg_src2, reg_dst, IR_ARI, IR_MUL);             
+}
+
+
+uint32_t Div(uint32_t const &reg_src1, uint32_t const &reg_src2,
+             uint32_t const &reg_dst){
+  return CodeClass3(reg_src1, reg_src2, reg_dst, IR_ARI, IR_DIV);             
+}
+}; //namespace IRBuilderAPI
 
 uint32_t Stop(){
   return IR_STOP;
@@ -61,7 +88,7 @@ uint32_t Stop(){
 
 std::string PrintInstruction(uint32_t const &instruction){
   uint32_t const current_class   = DecodeClass(instruction);
-  uint32_t const current_type    = DecodeType(instruction);  
+  uint32_t const current_type    = DecodeType(instruction, current_class);  
   uint32_t const current_op_code = DecodeOpCode(current_class, current_type);
   uint32_t reg_src1, reg_src2, reg_dst, sub_type, literal, op_offset;
   std::string s;
@@ -69,7 +96,7 @@ std::string PrintInstruction(uint32_t const &instruction){
 //   std::cout << "Op: " << current_op_code <<"\n";
   //Decode operans
   switch(current_class){
-    case InstClassNoReg: break;
+    case InstClassNoReg:  break;
     case InstClassRegLit: DecodeClass1(instruction, reg_dst, literal);  break;
     case InstClassRegLitSub: break;
     case InstClassRegRegRegSub:
@@ -90,13 +117,29 @@ std::string PrintInstruction(uint32_t const &instruction){
           to_string(literal); 
       break;
     case IR_ARI: 
+      using namespace SubtypesArithmetic;
       switch(sub_type){
         case IR_ADD: s = string("ADD, rs1:"); break;
+        case IR_SUB: s = string("SUB, rs1:"); break;
+        case IR_MUL: s = string("MUL, rs1:"); break;
+        case IR_DIV: s = string("DIV, rs1:"); break;
         default:     s = string(" - ERROR in print decode -"); break;
       }
       s = s + to_string(reg_src1) + string(" rs2: ") +
           to_string(reg_src2) + string(" rd:") + to_string(reg_dst); 
-      break;      
+      break;//case IR_ARI     
+    case IR_CMP: 
+      using namespace SubtypesComparison;
+      switch(sub_type){
+        case IR_NOT: s = string("NOT, rs1:"); break;
+        case IR_EQL: s = string("EQL, rs1:"); break;
+        case IR_LST: s = string("LST, rs1:"); break;
+        case IR_LTE: s = string("LTE, rs1:"); break;
+        default:     s = string(" - ERROR in print decode -"); break;
+      }
+      s = s + to_string(reg_src1) + string(" rs2: ") +
+          to_string(reg_src2) + string(" rd:") + to_string(reg_dst); 
+      break;//case IR_CMP    
     default: s = string(" - ERROR in print decode -"); break;
   };
   

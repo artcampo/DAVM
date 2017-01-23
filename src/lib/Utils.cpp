@@ -16,11 +16,19 @@ void print(ByteCode const &byte_code){
   }
 }
 
+void printRaw(ByteCode const &byte_code){
+  using namespace IRBuilder;
+  std::cout << "RAW bytecode:\n";
+  for ( auto const inst : byte_code.stream){
+    std::cout << inst << "\n";
+  }
+}
+
 void writeByteCode(ByteCode const &byte_code, std::string const &file_name){
   std::unique_ptr<std::ofstream> outputFile( new std::ofstream() );
   outputFile->open (file_name);
   *outputFile << std::string("davm") << "\n";    
-  *outputFile << byte_code.stream.size();
+  *outputFile << byte_code.stream.size() << "\n";
   
   for ( auto const inst : byte_code.stream){
     *outputFile << inst << "\n";

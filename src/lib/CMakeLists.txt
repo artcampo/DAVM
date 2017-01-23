@@ -7,6 +7,7 @@ set(files
     Process.cpp
     RegisterBank.cpp
     VM.cpp
+    VM_instructions_implementation.cpp
     IRCodification.cpp
     IRBuilder.cpp
     Utils.cpp

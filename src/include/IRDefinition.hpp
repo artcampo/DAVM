@@ -7,31 +7,22 @@ const static int kClassNumberOfBits    = 2;
   const static int kClass1NumberOfBits    = 2;
   const static int kClass2NumberOfBits    = 1;
   const static int kClass3NumberOfBits    = 1;
-  const static int kClass0OpcodeNumberOfBits = kClassNumberOfBits 
-                                             + kClass0NumberOfBits;
-  const static int kClass1OpcodeNumberOfBits = kClassNumberOfBits 
-                                             + kClass1NumberOfBits;
-  const static int kClass2OpcodeNumberOfBits = kClassNumberOfBits 
-                                             + kClass2NumberOfBits;
-  const static int kClass3OpcodeNumberOfBits = kClassNumberOfBits 
-                                             + kClass3NumberOfBits;
-const static int kOpCodeNumberOfBits   = 3;
+  const static int kClass0OpcodeNumberOfBits = kClassNumberOfBits + kClass0NumberOfBits;
+  const static int kClass1OpcodeNumberOfBits = kClassNumberOfBits + kClass1NumberOfBits;
+  const static int kClass2OpcodeNumberOfBits = kClassNumberOfBits + kClass2NumberOfBits;
+  const static int kClass3OpcodeNumberOfBits = kClassNumberOfBits + kClass3NumberOfBits;
 const static int kRegisterNumberOfBits = 4;
 const static int kLiteralNumberOfBits  = 16;
 const static int kSubtypeNumberOfBits  = 2;
 
-const static int kClassBitMask =  (1 << kClassNumberOfBits) - 1;  
+const static int kClassBitMask =     (1 << kClassNumberOfBits) - 1;  
   const static int kClass0BitMask =  (1 << kClass0NumberOfBits) - 1; 
   const static int kClass1BitMask =  (1 << kClass1NumberOfBits) - 1; 
   const static int kClass2BitMask =  (1 << kClass2NumberOfBits) - 1; 
   const static int kClass3BitMask =  (1 << kClass3NumberOfBits) - 1; 
-const static int kOpCodeBitMask = (1 << kOpCodeNumberOfBits) - 1;
-const static int kRegistertMask = (1 << kRegisterNumberOfBits) - 1;
-const static int kLiteraltMask  = (1 << kLiteralNumberOfBits) - 1;
-
-const static int kClass3TypeNumberOfBits    = 1;
-
-const static int kClass3TypeBitMask =  (1 << kClass3TypeNumberOfBits) - 1;  
+const static int kRegistertMask =    (1 << kRegisterNumberOfBits) - 1;
+const static int kLiteraltMask  =    (1 << kLiteralNumberOfBits) - 1;
+const static int kSubtypeMask   =    (1 << kSubtypeNumberOfBits) - 1;
 
 enum InstClasses{
   InstClassNoReg        = 0,
@@ -66,6 +57,15 @@ enum IRSubtypesArithmetic{
 };
 };
 
+namespace SubtypesComparison{
+enum IRSubtypesComparison{
+  IR_NOT = 0,   // !
+  IR_EQL = 1,   // ==
+  IR_LST = 2,   // <
+  IR_LTE = 3,   // <=    
+};
+};
+
 enum IRRegisters {
   IR_REG0  = 0,
   IR_REG1  = 1,
@@ -79,8 +79,12 @@ enum IRRegisters {
   IR_REG9  = 9,
   IR_REG10 = 10,
   IR_REG11 = 11,
+  IR_REG12 = 12,
+  IR_REG13 = 13,
+  IR_REG14 = 14,
+  IR_REG15 = 15
 };
   
 
-}; //namespace IRCodification
+}; //namespace IRDefinition
 
