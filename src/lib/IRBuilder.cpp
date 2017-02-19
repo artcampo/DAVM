@@ -57,18 +57,18 @@ uint32_t Comp(uint32_t const &reg_src1, uint32_t const &reg_src2,
 
 Inst IfElse(Reg const &reg_src1, Target const &target_exit,
             Target const &target_else){
-  return 0;
+  return IR_NOT_IMPLEMENTED;
 }
 
 Inst If(Reg const &reg_src1, Target const &target_exit){
-  return 0;
+  return IR_NOT_IMPLEMENTED;
 }
 
 Inst NewVar(Reg const &reg_src1){
-  return 0;
+  return IR_NOT_IMPLEMENTED;
 }
 Inst NewTypeId(Reg const &reg_src1, Reg const &reg_src2){
-  return 0;
+  return IR_NOT_IMPLEMENTED;
 }
 
 namespace IRBuilderAPI{
@@ -126,6 +126,8 @@ std::string PrintInstruction(uint32_t const &instruction){
   //Produce string
   using namespace std;
   switch(current_op_code){
+    case IR_NOT_IMPLEMENTED:
+      s = string("[Inst not implemented]"); break;
     case IR_STOP:
       s = string("Stop"); break;
     case IR_LOAD:
