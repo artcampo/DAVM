@@ -2,10 +2,8 @@
 #include <stdint.h>
 #include <vector>
 #include <cstddef>
+#include "BasicTypes.hpp"
 
-namespace VM{
-  using Addr = size_t;
-};
 
 using VM::Addr;
 

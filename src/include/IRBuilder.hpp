@@ -1,14 +1,13 @@
 #pragma once
 #include "IRCodification.hpp"
-
+//TODO:
+#include "BasicTypes.hpp"
 namespace IRBuilder{
 
 bool        checkIRCodification();
 std::string PrintInstruction(uint32_t const &instruction);
 
-using Target = uint32_t;
-using Inst   = uint32_t;
-using Reg   = uint32_t;
+
 
 uint32_t Stop();
 uint32_t Load(uint32_t const &reg_dst, uint32_t const &literal);
