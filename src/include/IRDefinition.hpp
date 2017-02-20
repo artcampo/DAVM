@@ -15,11 +15,11 @@ const static int kRegisterNumberOfBits = 4;
 const static int kLiteralNumberOfBits  = 16;
 const static int kSubtypeNumberOfBits  = 2;
 
-const static int kClassBitMask =     (1 << kClassNumberOfBits) - 1;  
-  const static int kClass0BitMask =  (1 << kClass0NumberOfBits) - 1; 
-  const static int kClass1BitMask =  (1 << kClass1NumberOfBits) - 1; 
-  const static int kClass2BitMask =  (1 << kClass2NumberOfBits) - 1; 
-  const static int kClass3BitMask =  (1 << kClass3NumberOfBits) - 1; 
+const static int kClassBitMask =     (1 << kClassNumberOfBits) - 1;
+  const static int kClass0BitMask =  (1 << kClass0NumberOfBits) - 1;
+  const static int kClass1BitMask =  (1 << kClass1NumberOfBits) - 1;
+  const static int kClass2BitMask =  (1 << kClass2NumberOfBits) - 1;
+  const static int kClass3BitMask =  (1 << kClass3NumberOfBits) - 1;
 const static int kRegistertMask =    (1 << kRegisterNumberOfBits) - 1;
 const static int kLiteraltMask  =    (1 << kLiteralNumberOfBits) - 1;
 const static int kSubtypeMask   =    (1 << kSubtypeNumberOfBits) - 1;
@@ -35,11 +35,12 @@ enum InstClasses{
 enum IRCodf {
   IR_NOP   = InstClassNoReg + (0 << kClassNumberOfBits),
   IR_STOP  = InstClassNoReg + (1 << kClassNumberOfBits),
-  
+  IR_NOT_IMPLEMENTED = InstClassNoReg + (2 << kClassNumberOfBits),
+
   IR_JMP   = InstClassRegLit + (0 << kClassNumberOfBits),
   IR_LOAD  = InstClassRegLit + (1 << kClassNumberOfBits),
   IR_CALL  = InstClassRegLit + (2 << kClassNumberOfBits),
-  
+
   IR_JMPC  = InstClassRegLitSub + (0 << kClassNumberOfBits),
   IR_ARII  = InstClassRegLitSub + (1 << kClassNumberOfBits),
 
@@ -62,7 +63,7 @@ enum IRSubtypesComparison{
   IR_NOT = 0,   // !
   IR_EQL = 1,   // ==
   IR_LST = 2,   // <
-  IR_LTE = 3,   // <=    
+  IR_LTE = 3,   // <=
 };
 };
 
@@ -84,7 +85,7 @@ enum IRRegisters {
   IR_REG14 = 14,
   IR_REG15 = 15
 };
-  
+
 
 }; //namespace IRDefinition
 

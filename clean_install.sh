@@ -1,7 +1,7 @@
 #!/bin/sh
 
 rm -rf build
-rm -rf 
+rm -rf install
 mkdir build
 cd build
 cmake ../ -DCMAKE_INSTALL_PREFIX=../install
