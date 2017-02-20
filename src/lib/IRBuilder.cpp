@@ -13,27 +13,27 @@ bool checkIRCodification(){
   bool wellFormed = true;
 
   //Class 0
-  wellFormed &= ( kClassNumberOfBits
-                + kClass0NumberOfBits
-                + kRegisterNumberOfBits
-                + kLiteralNumberOfBits) <= 32;
+  wellFormed &= ( kClassNumBits
+                + kClass0NumBits
+                + kRegisterNumBits
+                + kLiteralNumBits) <= 32;
  //Class 1
-  wellFormed &= ( kClassNumberOfBits
-                + kClass1NumberOfBits
-                + kRegisterNumberOfBits
-                + kLiteralNumberOfBits) <= 32;
+  wellFormed &= ( kClassNumBits
+                + kClass1NumBits
+                + kRegisterNumBits
+                + kLiteralNumBits) <= 32;
 
  //Class 2
-  wellFormed &= ( kClassNumberOfBits
-                + kClass2NumberOfBits
-                + kRegisterNumberOfBits
-                + kLiteralNumberOfBits
-                + kSubtypeNumberOfBits) <= 32;
+  wellFormed &= ( kClassNumBits
+                + kClass2NumBits
+                + kRegisterNumBits
+                + kLiteralNumBits
+                + kSubtypeNumBits) <= 32;
  //Class 3
-  wellFormed &= ( kClassNumberOfBits
-                + kClass3NumberOfBits
-                + kRegisterNumberOfBits*3
-                + kSubtypeNumberOfBits) <= 32;
+  wellFormed &= ( kClassNumBits
+                + kClass3NumBits
+                + kRegisterNumBits*3
+                + kSubtypeNumBits) <= 32;
 
   return wellFormed;
 }
@@ -56,15 +56,15 @@ uint32_t Comp(uint32_t const &reg_src1, uint32_t const &reg_src2,
 }
 
 Inst Jump(Target const &target){
-  return IR_NOT_IMPLEMENTED;
+  return CodeClass1(0, target, IR_JMP);
 }
 
 Inst JumpIfTrue (Reg const &reg_src1, Target const &target){
-  return IR_NOT_IMPLEMENTED;
+  return CodeClass2(0, target, IR_JMPC, SubtypesJMPC::IR_TRUE);
 }
 
 Inst JumpIfFalse (Reg const &reg_src1, Target const &target){
-  return IR_NOT_IMPLEMENTED;
+  return CodeClass2(0, target, IR_JMPC, SubtypesJMPC::IR_FALSE);
 }
 
 Inst NewVar(Reg const &reg_src1){
@@ -77,7 +77,14 @@ Inst NewTypeId(Reg const &reg_src1, Reg const &reg_src2){
 
 
 void PatchJump(Inst& inst, Target const &target){
+  if((inst & ((1 << (kClassNumBits + kClass1NumBits)) - 1)) == IR_JMP)
+    inst = CodeClass1(0, target, IR_JMP);
 
+  if((inst & ((1 << (kClassNumBits + kClass2NumBits)) - 1)) == IR_JMPC){
+    uint32_t subt = (inst >> kClass2OpcodeNumBits) & kLiteraltMask;
+    inst = CodeClass2(0, target, IR_JMPC, subt);
+
+  }
 }
 
 namespace IRBuilderAPI{
@@ -122,12 +129,12 @@ std::string PrintInstruction(uint32_t const &instruction){
   //Decode operans
   switch(current_class){
     case InstClassNoReg:  break;
-    case InstClassRegLit: DecodeClass1(instruction, reg_dst, literal);  break;
-    case InstClassRegLitSub: break;
+    case InstClassRegLit:
+      DecodeClass1(instruction, reg_dst, literal);  break;
+    case InstClassRegLitSub:
+      DecodeClass2(instruction, reg_dst, literal, sub_type);  break;
     case InstClassRegRegRegSub:
-      DecodeClass3(instruction, reg_src1, reg_src2, reg_dst,
-                    sub_type);
-      break;
+      DecodeClass3(instruction, reg_src1, reg_src2, reg_dst, sub_type);break;
 
     default: break;
   }
@@ -142,6 +149,15 @@ std::string PrintInstruction(uint32_t const &instruction){
     case IR_LOAD:
       s = string("Load, r:") + to_string(reg_dst) + string(" val: ") +
           to_string(literal);
+      break;
+    case IR_JMP:
+      s = string("Jump, to:") + to_string(literal);
+      break;
+    case IR_JMPC:
+      s = string("jump if ");
+      if(sub_type == SubtypesJMPC::IR_TRUE) s += string("true");
+      if(sub_type == SubtypesJMPC::IR_FALSE) s += string("false");
+      s += string("to:") + to_string(literal);
       break;
     case IR_ARI:
       using namespace SubtypesArithmetic;

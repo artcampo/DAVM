@@ -5,7 +5,7 @@
 namespace IRCodification{
 
 using namespace IRDefinition;
-  
+
 uint32_t  DecodeClass (uint32_t const &instruction){
   return instruction & kClassBitMask;
 }
@@ -13,61 +13,83 @@ uint32_t  DecodeClass (uint32_t const &instruction){
 
 uint32_t  DecodeType (uint32_t const &instruction, uint32_t const &inst_class){
   if( inst_class == InstClassNoReg )
-    return (instruction >> kClassNumberOfBits) & kClass0BitMask;
+    return (instruction >> kClassNumBits) & kClass0BitMask;
   else if( inst_class == InstClassRegLit )
-    return (instruction >> kClassNumberOfBits) & kClass1BitMask;
+    return (instruction >> kClassNumBits) & kClass1BitMask;
   else if( inst_class == InstClassRegLitSub )
-    return (instruction >> kClassNumberOfBits) & kClass2BitMask;
+    return (instruction >> kClassNumBits) & kClass2BitMask;
  else //if( inst_class == InstClassRegRegRegSub )
-    return (instruction >> kClassNumberOfBits) & kClass3BitMask;
+    return (instruction >> kClassNumBits) & kClass3BitMask;
 }
 
 
 uint32_t  DecodeOpCode(uint32_t const &inst_class, uint32_t const &inst_type){
-  return inst_class + (inst_type << kClassNumberOfBits);
+  return inst_class + (inst_type << kClassNumBits);
 }
 
 uint32_t CodeClass1(uint32_t const &reg_dst, uint32_t const& literal,
                     uint32_t const &type){
   return type
-    + (reg_dst << (kClass1OpcodeNumberOfBits))
-    + (literal << (kClass1OpcodeNumberOfBits+ kRegisterNumberOfBits));
+    + (reg_dst << (kClass1OpcodeNumBits))
+    + (literal << (kClass1OpcodeNumBits+ kRegisterNumBits));
+}
+
+uint32_t CodeClass2(uint32_t const &reg_dst, uint32_t const& literal,
+                    uint32_t const &type, uint32_t const &subtype){
+  return type
+    + (subtype  << (kClass2OpcodeNumBits))
+    + (reg_dst <<  (kClass2OpcodeNumBits + kSubtypeNumBits))
+    + (literal <<  (kClass2OpcodeNumBits + kSubtypeNumBits + kRegisterNumBits));
 }
 
 uint32_t CodeClass3(uint32_t const &reg_src1, uint32_t const &reg_src2
                    ,uint32_t const &reg_dst, uint32_t const &type
                    ,uint32_t const &subtype){
   return type
-    + (subtype  << (kClass3OpcodeNumberOfBits))
-    + (reg_src1 << (kClass3OpcodeNumberOfBits + kSubtypeNumberOfBits))
-    + (reg_src2 << (kClass3OpcodeNumberOfBits + kSubtypeNumberOfBits
-                    + kRegisterNumberOfBits))
-    + (reg_dst  << (kClass3OpcodeNumberOfBits + kSubtypeNumberOfBits
-                    + kRegisterNumberOfBits*2));
+    + (subtype  << (kClass3OpcodeNumBits))
+    + (reg_src1 << (kClass3OpcodeNumBits + kSubtypeNumBits))
+    + (reg_src2 << (kClass3OpcodeNumBits + kSubtypeNumBits
+                    + kRegisterNumBits))
+    + (reg_dst  << (kClass3OpcodeNumBits + kSubtypeNumBits
+                    + kRegisterNumBits*2));
 }
 
-void DecodeClass1(uint32_t const instruction, uint32_t &reg_dst, 
+void DecodeClass1(uint32_t const instruction, uint32_t &reg_dst,
                 uint32_t &literal){
-  reg_dst = (instruction >> kClass1OpcodeNumberOfBits) 
+  reg_dst = (instruction >> kClass1OpcodeNumBits)
             & kRegistertMask;
-  literal = (instruction >> (kClass1OpcodeNumberOfBits + kRegisterNumberOfBits))
+  literal = (instruction >> (kClass1OpcodeNumBits + kRegisterNumBits))
             & kLiteraltMask;
+}
+
+
+void DecodeClass2(uint32_t const instruction, uint32_t& reg_dst
+                 ,uint32_t& literal, uint32_t& subtype){
+  subtype  = (instruction >> (kClass2OpcodeNumBits))
+           & kSubtypeMask;
+  reg_dst  = (instruction >> (kClass2OpcodeNumBits
+                              + kSubtypeNumBits))
+           & kRegistertMask;
+  literal  = (instruction >> (kClass2OpcodeNumBits
+                              + kSubtypeNumBits
+                              + kRegisterNumBits))
+           & kLiteraltMask;
 }
 
 void DecodeClass3(uint32_t const instruction, uint32_t &reg_src1
                  ,uint32_t &reg_src2, uint32_t &reg_dst, uint32_t &subtype){
-  
-  subtype  = (instruction >> (kClass3OpcodeNumberOfBits)) 
+
+  subtype  = (instruction >> (kClass3OpcodeNumBits))
            & kSubtypeMask;
-  reg_src1 = (instruction >> (kClass3OpcodeNumberOfBits 
-                              + kSubtypeNumberOfBits)) 
+  reg_src1 = (instruction >> (kClass3OpcodeNumBits
+                              + kSubtypeNumBits))
            & kRegistertMask;
-  reg_src2 = (instruction >> (kClass3OpcodeNumberOfBits 
-                              + kSubtypeNumberOfBits + kRegisterNumberOfBits)) 
+  reg_src2 = (instruction >> (kClass3OpcodeNumBits
+                              + kSubtypeNumBits + kRegisterNumBits))
            & kRegistertMask;
-  reg_dst  = (instruction >> (kClass3OpcodeNumberOfBits 
-                              + kSubtypeNumberOfBits + kRegisterNumberOfBits*2))
-           & kRegistertMask;            
+  reg_dst  = (instruction >> (kClass3OpcodeNumBits
+                              + kSubtypeNumBits + kRegisterNumBits*2))
+           & kRegistertMask;
 }
-  
+
 }; //namespace IRCodification
