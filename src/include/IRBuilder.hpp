@@ -4,6 +4,11 @@
 #include "BasicTypes.hpp"
 namespace IRBuilder{
 
+using VM::Addr;
+using VM::Inst;
+using VM::Target;
+using VM::Reg;
+
 bool        checkIRCodification();
 std::string PrintInstruction(uint32_t const &instruction);
 
@@ -23,8 +28,9 @@ Inst Comp(uint32_t const &reg_src1, uint32_t const &reg_src2,
               uint32_t const &reg_dst, uint32_t const &op);
 
 
-Inst JumpIfTrue (Reg const &reg_src1, Target const &target);
-Inst JumpIfFalse(Reg const &reg_src1, Target const &target);
+Inst Jump       (const Target& target);
+Inst JumpIfTrue (const Reg& reg_src1, const Target& target);
+Inst JumpIfFalse(const Reg& reg_src1, const Target& target);
 
 void PatchJump(Inst& inst, Target const &target);
 

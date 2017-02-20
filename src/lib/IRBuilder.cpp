@@ -55,6 +55,10 @@ uint32_t Comp(uint32_t const &reg_src1, uint32_t const &reg_src2,
   return CodeClass3(reg_src1, reg_src2, reg_dst, IR_CMP, op);
 }
 
+Inst Jump(Target const &target){
+  return IR_NOT_IMPLEMENTED;
+}
+
 Inst JumpIfTrue (Reg const &reg_src1, Target const &target){
   return IR_NOT_IMPLEMENTED;
 }
@@ -69,6 +73,8 @@ Inst NewVar(Reg const &reg_src1){
 Inst NewTypeId(Reg const &reg_src1, Reg const &reg_src2){
   return IR_NOT_IMPLEMENTED;
 }
+
+
 
 void PatchJump(Inst& inst, Target const &target){
 
