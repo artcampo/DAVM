@@ -24,9 +24,10 @@ Inst Comp(uint32_t const &reg_src1, uint32_t const &reg_src2,
               uint32_t const &reg_dst, uint32_t const &op);
 
 
-Inst IfElse(Reg const &reg_src1, Target const &target_exit,
-            Target const &target_else);
-Inst If(Reg const &reg_src1, Target const &target_exit);
+Inst JumpIfTrue (Reg const &reg_src1, Target const &target);
+Inst JumpIfFalse(Reg const &reg_src1, Target const &target);
+
+void PatchJump(Inst& inst, Target const &target);
 
 //Creates new variable, reg_src1 = TypeId
 Inst NewVar(Reg const &reg_src1);
