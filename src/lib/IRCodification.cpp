@@ -5,6 +5,7 @@
 namespace IRCodification{
 
 using namespace IRDefinition;
+using namespace VM;
 
 uint32_t  DecodeClass (uint32_t const &instruction){
   return instruction & kClassBitMask;
@@ -27,14 +28,19 @@ uint32_t  DecodeOpCode(uint32_t const &inst_class, uint32_t const &inst_type){
   return inst_class + (inst_type << kClassNumBits);
 }
 
-uint32_t CodeClass1(uint32_t const &reg_dst, uint32_t const& literal,
+VM::Inst CodeClass0(uint32_t const& literal, const uint32_t &type){
+  return type
+    + (literal << kClass0OpcodeNumBits);
+}
+
+VM::Inst CodeClass1(uint32_t const &reg_dst, uint32_t const& literal,
                     uint32_t const &type){
   return type
     + (reg_dst << (kClass1OpcodeNumBits))
     + (literal << (kClass1OpcodeNumBits+ kRegisterNumBits));
 }
 
-uint32_t CodeClass2(uint32_t const &reg_dst, uint32_t const& literal,
+VM::Inst CodeClass2(uint32_t const &reg_dst, uint32_t const& literal,
                     uint32_t const &type, uint32_t const &subtype){
   return type
     + (subtype  << (kClass2OpcodeNumBits))
@@ -42,7 +48,7 @@ uint32_t CodeClass2(uint32_t const &reg_dst, uint32_t const& literal,
     + (literal <<  (kClass2OpcodeNumBits + kSubtypeNumBits + kRegisterNumBits));
 }
 
-uint32_t CodeClass3(uint32_t const &reg_src1, uint32_t const &reg_src2
+VM::Inst CodeClass3(uint32_t const &reg_src1, uint32_t const &reg_src2
                    ,uint32_t const &reg_dst, uint32_t const &type
                    ,uint32_t const &subtype){
   return type
@@ -54,7 +60,13 @@ uint32_t CodeClass3(uint32_t const &reg_src1, uint32_t const &reg_src2
                     + kRegisterNumBits*2));
 }
 
-void DecodeClass1(uint32_t const instruction, uint32_t &reg_dst,
+
+void DecodeClass0(const VM::Inst instruction, uint32_t& literal){
+  literal = (instruction >> kClass0OpcodeNumBits)
+            & kLiteraltMask;
+}
+
+void DecodeClass1(const VM::Inst instruction, uint32_t &reg_dst,
                 uint32_t &literal){
   reg_dst = (instruction >> kClass1OpcodeNumBits)
             & kRegistertMask;
@@ -63,7 +75,7 @@ void DecodeClass1(uint32_t const instruction, uint32_t &reg_dst,
 }
 
 
-void DecodeClass2(uint32_t const instruction, uint32_t& reg_dst
+void DecodeClass2(const VM::Inst instruction, uint32_t& reg_dst
                  ,uint32_t& literal, uint32_t& subtype){
   subtype  = (instruction >> (kClass2OpcodeNumBits))
            & kSubtypeMask;
@@ -76,7 +88,7 @@ void DecodeClass2(uint32_t const instruction, uint32_t& reg_dst
            & kLiteraltMask;
 }
 
-void DecodeClass3(uint32_t const instruction, uint32_t &reg_src1
+void DecodeClass3(const VM::Inst instruction, uint32_t &reg_src1
                  ,uint32_t &reg_src2, uint32_t &reg_dst, uint32_t &subtype){
 
   subtype  = (instruction >> (kClass3OpcodeNumBits))

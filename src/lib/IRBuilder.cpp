@@ -3,35 +3,37 @@
 #include "IRCodification.hpp"
 #include <string>
 #include <iostream>
+#include "BasicTypes.hpp"
 
 namespace IRBuilder{
 
 using namespace IRDefinition;
 using namespace IRCodification;
+using namespace VM;
 
 bool checkIRCodification(){
   bool wellFormed = true;
 
   //Class 0
   wellFormed &= ( kClassNumBits
-                + kClass0NumBits
+                + kClass0InstTypeNumBits
                 + kRegisterNumBits
                 + kLiteralNumBits) <= 32;
  //Class 1
   wellFormed &= ( kClassNumBits
-                + kClass1NumBits
+                + kClass1InstTypeNumBits
                 + kRegisterNumBits
                 + kLiteralNumBits) <= 32;
 
  //Class 2
   wellFormed &= ( kClassNumBits
-                + kClass2NumBits
+                + kClass2InstTypeNumBits
                 + kRegisterNumBits
                 + kLiteralNumBits
                 + kSubtypeNumBits) <= 32;
  //Class 3
   wellFormed &= ( kClassNumBits
-                + kClass3NumBits
+                + kClass3InstTypeNumBits
                 + kRegisterNumBits*3
                 + kSubtypeNumBits) <= 32;
 
@@ -56,7 +58,7 @@ uint32_t Comp(const uint32_t&reg_src1, const uint32_t&reg_src2,
 }
 
 Inst Jump(const Target& target){
-  return CodeClass1(0, target, IR_JMP);
+  return CodeClass0(target, IR_JMP);
 }
 
 Inst JumpIfTrue (const Reg&reg_src1, const Target& target){
@@ -67,20 +69,21 @@ Inst JumpIfFalse (const Reg&reg_src1, const Target& target){
   return CodeClass2(0, target, IR_JMPC, SubtypesJMPC::IR_FALSE);
 }
 
-Inst NewVar(const Reg&reg_src1){
-  return IR_NOT_IMPLEMENTED;
+Inst NewVar(const TypeId &type_literal){
+  return CodeClass0(type_literal, IR_NEW_VAR);
 }
+
 Inst NewTypeId(const Reg&reg_src1, const Reg&reg_src2){
-  return IR_NOT_IMPLEMENTED;
+  return IR_NOT_IMPL;
 }
 
 
 
 void PatchJump(Inst& inst, const Target& target){
-  if((inst & ((1 << (kClassNumBits + kClass1NumBits)) - 1)) == IR_JMP)
+  if((inst & ((1 << (kClassNumBits + kClass1InstTypeNumBits)) - 1)) == IR_JMP)
     inst = CodeClass1(0, target, IR_JMP);
 
-  if((inst & ((1 << (kClassNumBits + kClass2NumBits)) - 1)) == IR_JMPC){
+  if((inst & ((1 << (kClassNumBits + kClass2InstTypeNumBits)) - 1)) == IR_JMPC){
     uint32_t subt = (inst >> kClass2OpcodeNumBits) & kLiteraltMask;
     inst = CodeClass2(0, target, IR_JMPC, subt);
 
@@ -128,7 +131,8 @@ std::string PrintInstruction(const uint32_t& instruction){
 //   std::cout << "Op: " << current_op_code <<"\n";
   //Decode operans
   switch(current_class){
-    case InstClassNoReg:  break;
+    case InstClassNoReg:
+      DecodeClass0(instruction, literal);  break;
     case InstClassRegLit:
       DecodeClass1(instruction, reg_dst, literal);  break;
     case InstClassRegLitSub:
@@ -142,7 +146,7 @@ std::string PrintInstruction(const uint32_t& instruction){
   //Produce string
   using namespace std;
   switch(current_op_code){
-    case IR_NOT_IMPLEMENTED:
+    case IR_NOT_IMPL:
       s = string("[Inst not implemented]"); break;
     case IR_STOP:
       s = string("Stop"); break;
