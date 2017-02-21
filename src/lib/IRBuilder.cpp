@@ -80,13 +80,12 @@ Inst NewTypeId(const Reg&reg_src1, const Reg&reg_src2){
 
 
 void PatchJump(Inst& inst, const Target& target){
-  if((inst & ((1 << (kClassNumBits + kClass1InstTypeNumBits)) - 1)) == IR_JMP)
-    inst = CodeClass1(0, target, IR_JMP);
+  if((inst & kClass0OpcodeBitMask) == IR_JMP)
+    inst = CodeClass0(target, IR_JMP);
 
-  if((inst & ((1 << (kClassNumBits + kClass2InstTypeNumBits)) - 1)) == IR_JMPC){
+  if((inst & kClass2OpcodeBitMask) == IR_JMPC){
     uint32_t subt = (inst >> kClass2OpcodeNumBits) & kLiteraltMask;
     inst = CodeClass2(0, target, IR_JMPC, subt);
-
   }
 }
 
@@ -146,23 +145,36 @@ std::string PrintInstruction(const uint32_t& instruction){
   //Produce string
   using namespace std;
   switch(current_op_code){
-    case IR_NOT_IMPL:
-      s = string("[Inst not implemented]"); break;
+    //Class 0
+    case IR_NOP:
+      s = string("NOP");
+      break;
     case IR_STOP:
-      s = string("Stop"); break;
+      s = string("STOP"); break;
+    case IR_NOT_IMPL:
+      s = string("[Not implemented]"); break;
+    case IR_JMP:
+      s = string("JUMP: @") + to_string(literal);
+      break;
+    case IR_NEW_VAR:
+      s = string("NewVar: TypeId") + to_string(literal);
+      break;
+
+    //Class 1
     case IR_LOAD:
       s = string("Load, r:") + to_string(reg_dst) + string(" val: ") +
           to_string(literal);
       break;
-    case IR_JMP:
-      s = string("Jump, to:") + to_string(literal);
-      break;
+
+    //Class 2
     case IR_JMPC:
       s = string("jump if ");
       if(sub_type == SubtypesJMPC::IR_TRUE) s += string("true");
       if(sub_type == SubtypesJMPC::IR_FALSE) s += string("false");
       s += string("to:") + to_string(literal);
       break;
+
+    //Class 3
     case IR_ARI:
       using namespace SubtypesArithmetic;
       switch(sub_type){
