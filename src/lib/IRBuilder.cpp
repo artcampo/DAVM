@@ -41,42 +41,42 @@ bool checkIRCodification(){
 
 
 
-uint32_t Load(uint32_t const &reg_dst, uint32_t const& literal){
+uint32_t Load(const uint32_t&reg_dst, uint32_t const& literal){
   return CodeClass1(reg_dst, literal, IR_LOAD);
 }
 
-uint32_t Arith(uint32_t const &reg_src1, uint32_t const &reg_src2,
-               uint32_t const &reg_dst, uint32_t const &op){
+uint32_t Arith(const uint32_t&reg_src1, const uint32_t&reg_src2,
+               const uint32_t&reg_dst, const uint32_t&op){
   return CodeClass3(reg_src1, reg_src2, reg_dst, IR_ARI, op);
 }
 
-uint32_t Comp(uint32_t const &reg_src1, uint32_t const &reg_src2,
-               uint32_t const &reg_dst, uint32_t const &op){
+uint32_t Comp(const uint32_t&reg_src1, const uint32_t&reg_src2,
+               const uint32_t&reg_dst, const uint32_t&op){
   return CodeClass3(reg_src1, reg_src2, reg_dst, IR_CMP, op);
 }
 
-Inst Jump(Target const &target){
+Inst Jump(const Target& target){
   return CodeClass1(0, target, IR_JMP);
 }
 
-Inst JumpIfTrue (Reg const &reg_src1, Target const &target){
+Inst JumpIfTrue (const Reg&reg_src1, const Target& target){
   return CodeClass2(0, target, IR_JMPC, SubtypesJMPC::IR_TRUE);
 }
 
-Inst JumpIfFalse (Reg const &reg_src1, Target const &target){
+Inst JumpIfFalse (const Reg&reg_src1, const Target& target){
   return CodeClass2(0, target, IR_JMPC, SubtypesJMPC::IR_FALSE);
 }
 
-Inst NewVar(Reg const &reg_src1){
+Inst NewVar(const Reg&reg_src1){
   return IR_NOT_IMPLEMENTED;
 }
-Inst NewTypeId(Reg const &reg_src1, Reg const &reg_src2){
+Inst NewTypeId(const Reg&reg_src1, const Reg&reg_src2){
   return IR_NOT_IMPLEMENTED;
 }
 
 
 
-void PatchJump(Inst& inst, Target const &target){
+void PatchJump(Inst& inst, const Target& target){
   if((inst & ((1 << (kClassNumBits + kClass1NumBits)) - 1)) == IR_JMP)
     inst = CodeClass1(0, target, IR_JMP);
 
@@ -90,24 +90,24 @@ void PatchJump(Inst& inst, Target const &target){
 namespace IRBuilderAPI{
 using namespace SubtypesArithmetic;
 
-uint32_t Add(uint32_t const &reg_src1, uint32_t const &reg_src2,
-             uint32_t const &reg_dst){
+uint32_t Add(const uint32_t&reg_src1, const uint32_t&reg_src2,
+             const uint32_t&reg_dst){
   return CodeClass3(reg_src1, reg_src2, reg_dst, IR_ARI, IR_ADD);
 }
 
-uint32_t Sub(uint32_t const &reg_src1, uint32_t const &reg_src2,
-             uint32_t const &reg_dst){
+uint32_t Sub(const uint32_t&reg_src1, const uint32_t&reg_src2,
+             const uint32_t&reg_dst){
   return CodeClass3(reg_src1, reg_src2, reg_dst, IR_ARI, IR_SUB);
 }
 
-uint32_t Mul(uint32_t const &reg_src1, uint32_t const &reg_src2,
-             uint32_t const &reg_dst){
+uint32_t Mul(const uint32_t&reg_src1, const uint32_t&reg_src2,
+             const uint32_t&reg_dst){
   return CodeClass3(reg_src1, reg_src2, reg_dst, IR_ARI, IR_MUL);
 }
 
 
-uint32_t Div(uint32_t const &reg_src1, uint32_t const &reg_src2,
-             uint32_t const &reg_dst){
+uint32_t Div(const uint32_t&reg_src1, const uint32_t&reg_src2,
+             const uint32_t&reg_dst){
   return CodeClass3(reg_src1, reg_src2, reg_dst, IR_ARI, IR_DIV);
 }
 }; //namespace IRBuilderAPI
@@ -118,7 +118,7 @@ uint32_t Stop(){
 
 // static const std::string opcodes[1][2] = { {"a","b"}};
 
-std::string PrintInstruction(uint32_t const &instruction){
+std::string PrintInstruction(const uint32_t&instruction){
   uint32_t const current_class   = DecodeClass(instruction);
   uint32_t const current_type    = DecodeType(instruction, current_class);
   uint32_t const current_op_code = DecodeOpCode(current_class, current_type);
