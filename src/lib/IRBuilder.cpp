@@ -41,7 +41,7 @@ bool checkIRCodification(){
 
 
 
-uint32_t Load(const uint32_t&reg_dst, uint32_t const& literal){
+uint32_t Load(const uint32_t&reg_dst, const uint32_t& literal){
   return CodeClass1(reg_dst, literal, IR_LOAD);
 }
 
@@ -118,10 +118,10 @@ uint32_t Stop(){
 
 // static const std::string opcodes[1][2] = { {"a","b"}};
 
-std::string PrintInstruction(const uint32_t&instruction){
-  uint32_t const current_class   = DecodeClass(instruction);
-  uint32_t const current_type    = DecodeType(instruction, current_class);
-  uint32_t const current_op_code = DecodeOpCode(current_class, current_type);
+std::string PrintInstruction(const uint32_t& instruction){
+  const uint32_t current_class   = DecodeClass(instruction);
+  const uint32_t current_type    = DecodeType(instruction, current_class);
+  const uint32_t current_op_code = DecodeOpCode(current_class, current_type);
   uint32_t reg_src1, reg_src2, reg_dst, sub_type, literal, op_offset;
   std::string s;
 
