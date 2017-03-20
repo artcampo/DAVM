@@ -15,7 +15,7 @@ bool VirtualMachine::ExecProcess(){
     if( not process_->NextOpCodeIsValid() ){
       error     = true;
       executing = false;
-      error_log_->errors.push_back(std::string("Next opcode invalid"));
+      error_log_->errors.push_back("Next opcode invalid");
     }else{
       using namespace IRCodification;
       using namespace IRBuilder;
@@ -41,7 +41,7 @@ bool VirtualMachine::ExecProcess(){
             DecodeClass0(current_instruction, literal);
             switch(current_op_code){
               default:      error_log_->errors.push_back(
-                                          std::string("op not found (c0)"));
+                                          "op not found (c0)");
                             error = true; break;
             }
             break;
@@ -52,7 +52,7 @@ bool VirtualMachine::ExecProcess(){
             switch(current_op_code){
               case IR_LOAD: InstLoad(reg_dst, literal); break;
               default:      error_log_->errors.push_back(
-                                          std::string("op not found (c1)"));
+                                          "op not found (c1)");
                             error = true; break;
             }
             break;
@@ -61,7 +61,7 @@ bool VirtualMachine::ExecProcess(){
           case InstClassRegLitSub:
             switch(current_op_code){
               default:      error_log_->errors.push_back(
-                                          std::string("op not found (c2)"));
+                                          "op not found (c2)");
                             error = true; break;
             }
             break;
@@ -78,14 +78,14 @@ bool VirtualMachine::ExecProcess(){
                                               reg_dst, sub_type);
                             break;
               default:      error_log_->errors.push_back(
-                                          std::string("op not found (c3)"));
+                                          "op not found (c3)");
                             error = true; break;
             }
             break;
 
           ////////////////////////////////////////////////////////////
           default:      error_log_->errors.push_back(
-                                          std::string("class not found"));
+                                          "class not found");
                         error = true; break;
 
         }

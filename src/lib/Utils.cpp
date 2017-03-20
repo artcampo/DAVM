@@ -30,7 +30,7 @@ void printRaw(ByteCode const &byte_code){
 void writeByteCode(ByteCode const &byte_code, std::string const &file_name){
   std::unique_ptr<std::ofstream> outputFile( new std::ofstream() );
   outputFile->open (file_name);
-  *outputFile << std::string("davm") << "\n";
+  *outputFile << "davm" << "\n";
   *outputFile << byte_code.stream.size() << "\n";
 
   for ( auto const inst : byte_code.stream){
@@ -45,7 +45,7 @@ ByteCode* readByteCode(std::string const &file_name){
   inputFile->open (file_name);
 
   std::string s; *inputFile >> s;
-  if(s != std::string("davm")){
+  if(s != "davm"){
     std::cout << "Loading of ByteCode failed: ";
     std::cout << s;
     exit(1);
